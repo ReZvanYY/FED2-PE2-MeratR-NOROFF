@@ -3,17 +3,17 @@
 /*My Theme*/
 @layer base {
   :root {
-    --color-primary: #4A0E0E;
-    --color-secondary: #C5A059;
-    --color-surface-page: #FAF9F6;
-    --color-surface-form: #FFFFFF;
+    --color-primary: #4a0e0e;
+    --color-secondary: #c5a059;
+    --color-surface-page: #faf9f6;
+    --color-surface-form: #ffffff;
     --color-text-high: #000000;
-    --color-text-medium: #605F5F;
+    --color-text-medium: #605f5f;
   }
 
   body {
     background-color: var(--color-surface-page);
     color: var(--color-text-high);
-    font-family: 'Kadwa', serif;
+    font-family: "Kadwa", serif;
   }
 }
