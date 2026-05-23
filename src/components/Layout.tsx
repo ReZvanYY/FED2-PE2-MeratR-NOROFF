@@ -1,16 +1,17 @@
+// This file defines the main layout component for the application, which includes the header, main content area, and footer. The header contains the logo, navigation links, and user profile dropdown, while the footer includes additional links and social media icons. The layout also manages the state for the profile dropdown and handles user authentication status to conditionally render navigation options and profile information.
 import { useState, useRef, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export default function Layout() {
-  // Pull authentication data
+  // Pull authentication data and functions from the AuthContext to manage user state and actions within the layout, such as displaying user information and handling logout functionality.
   const { isAuthenticated, user, logout } = useAuth();
 
-  // State for the interactive profile dropdown
+  // State for the interactive profile dropdown menu in the header, which allows users to access their profile, dashboard, and logout options. The dropdownRef is used to detect clicks outside of the dropdown to close it when necessary, enhancing the user experience by providing a clean and intuitive interface for accessing user-related actions.
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Close the dropdown if the user clicks anywhere outside of it
+  // Close the dropdown if the user clicks anywhere outside of it to improve UX and prevent the dropdown from staying open unintentionally. This effect adds a global click listener when the component mounts and cleans it up when the component unmounts to avoid memory leaks and ensure proper behavior of the dropdown menu.
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -20,13 +21,13 @@ export default function Layout() {
         setIsDropdownOpen(false);
       }
     };
+    // Add the event listener to the entire document to capture clicks outside of the dropdown, ensuring that any click outside of the dropdown will trigger the close action. This is a common pattern for handling dropdowns and modals in React applications.
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
-    // The main container forces a minimum height of the screen and uses flexbox
-    // to push the footer to the bottom if the content is short.
+    // to push the footer to the bottom if the content is short. The font and background color are set for the entire layout to ensure a consistent look and feel across all pages that use this layout component.
     <div className="min-h-screen flex flex-col font-kadwa bg-[#FAF9F6]">
       {/* Header */}
       <header className="bg-[#4A1D1A] text-[#C49A5A] flex items-center justify-between px-8 py-3 shrink-0">
