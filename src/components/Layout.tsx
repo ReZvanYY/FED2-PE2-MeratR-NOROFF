@@ -33,7 +33,7 @@ export default function Layout() {
       <header className="bg-[#4A1D1A] text-[#C49A5A] flex items-center justify-between px-8 py-3 shrink-0">
         {/* Logo */}
         <div className="flex items-center">
-          <Link to="/">
+          <Link to="/" aria-label="Ember & Stone Home">
             <img
               src="/Logo.png"
               alt="Ember & Stone Logo"
@@ -43,7 +43,7 @@ export default function Layout() {
         </div>
 
         {/* Navigation */}
-        <nav className="flex space-x-8 font-bold text-sm tracking-wider">
+        <nav aria-label="Main Navigation" className="flex space-x-8 font-bold text-sm tracking-wider">
           <Link to="/" className="hover:text-white transition-colors">
             Home
           </Link>
@@ -73,12 +73,16 @@ export default function Layout() {
             <>
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="flex items-center focus:outline-none">
+                className="flex items-center focus:outline-none"
+                aria-expanded={isDropdownOpen}
+                aria-haspopup="true"
+                aria-controls="profile-menu"
+                aria-label="Toggle user menu">
                 {/* Show their avatar if they have one, otherwise fallback to the generic icon */}
                 {user?.avatar?.url ? (
                   <img
                     src={user.avatar.url}
-                    alt="Profile"
+                    alt="Profile Avatar"
                     className="h-12 w-12 rounded-full border-2 border-[#C49A5A] object-cover hover:opacity-80 transition-opacity"
                     onError={(e) => {
                       (e.target as HTMLImageElement).src =
@@ -88,7 +92,7 @@ export default function Layout() {
                 ) : (
                   <img
                     src="/ProfilePageGenericIcon.png"
-                    alt="Profile"
+                    alt="Default Profile Avatar"
                     className="h-16 w-24 object-contain hover:opacity-80 transition-opacity"
                   />
                 )}
@@ -96,12 +100,16 @@ export default function Layout() {
 
               {/* The Dropdown Menu */}
               {isDropdownOpen && (
-                <div className="absolute right-0 top-full mt-2 w-64 bg-[#FAF9F6] border-2 border-[#C49A5A] rounded-xl shadow-xl py-2 flex flex-col z-50">
-                  <div className="px-4 py-3 border-b border-[#C49A5A]/30 mb-2">
-                    <p className="text-sm font-bold text-[#4A1D1A] truncate">
+                <div 
+                  id="profile-menu"
+                  role="menu"
+                  aria-label="User Account Options"
+                  className="absolute right-0 top-full mt-2 w-64 bg-[#FAF9F6] border-2 border-[#C49A5A] rounded-xl shadow-xl py-2 flex flex-col z-50">
+                  <div className="px-4 py-3 border-b border-[#C49A5A]/30 mb-2" role="none">
+                    <p className="text-sm font-bold text-[#4A1D1A] truncate" aria-hidden="true">
                       {user?.name}
                     </p>
-                    <p className="text-xs text-[#4A1D1A]/70 truncate">
+                    <p className="text-xs text-[#4A1D1A]/70 truncate" aria-hidden="true">
                       {user?.email}
                     </p>
                   </div>
@@ -109,6 +117,7 @@ export default function Layout() {
                   <Link
                     to="/profile"
                     onClick={() => setIsDropdownOpen(false)}
+                    role="menuitem"
                     className="px-4 py-2 text-sm font-bold text-[#4A1D1A] hover:bg-[#C49A5A]/20 transition-colors">
                     Profile
                   </Link>
@@ -118,6 +127,7 @@ export default function Layout() {
                     <Link
                       to="/dashboard"
                       onClick={() => setIsDropdownOpen(false)}
+                      role="menuitem"
                       className="px-4 py-2 text-sm font-bold text-[#4A1D1A] hover:bg-[#C49A5A]/20 transition-colors">
                       Venue Manager Dashboard
                     </Link>
@@ -125,6 +135,7 @@ export default function Layout() {
                     <Link
                       to="/become-a-venue-manager"
                       onClick={() => setIsDropdownOpen(false)}
+                      role="menuitem"
                       className="px-4 py-2 text-sm font-bold text-[#4A1D1A] hover:bg-[#C49A5A]/20 transition-colors">
                       Become a Venue Manager
                     </Link>
@@ -135,6 +146,7 @@ export default function Layout() {
                       logout();
                       setIsDropdownOpen(false);
                     }}
+                    role="menuitem"
                     className="px-4 py-3 text-sm font-bold text-red-700 hover:bg-[#C49A5A]/20 transition-colors text-left w-full mt-1 border-t border-[#C49A5A]/30">
                     Sign Out
                   </button>
@@ -143,10 +155,10 @@ export default function Layout() {
             </>
           ) : (
             // --- LOGGED OUT VIEW ---
-            <Link to="/login">
+            <Link to="/login" aria-label="Go to Sign In page">
               <img
                 src="/ProfilePageGenericIcon.png"
-                alt="Sign In"
+                alt="Sign In Icon"
                 className="h-16 w-24 object-contain hover:opacity-80 transition-opacity"
               />
             </Link>
@@ -162,7 +174,10 @@ export default function Layout() {
       {/* Footer */}
       <footer className="bg-[#4A1D1A] text-[#C49A5A] flex items-center justify-between px-4 py-4">
         {/* Links */}
-        <div className="flex flex-col space-y-1 font-bold text-sm tracking-wide">
+        <div 
+          role="navigation" 
+          aria-label="Footer Navigation" 
+          className="flex flex-col space-y-1 font-bold text-sm tracking-wide">
           <Link to="/about" className="hover:text-white transition-colors">
             About Us
           </Link>
@@ -196,29 +211,29 @@ export default function Layout() {
         </div>
 
         {/* Social Icons */}
-        <div className="flex space-x-2">
-          <a href="https://x.com" target="_blank" rel="noreferrer">
+        <div className="flex space-x-2" aria-label="Social Media Links">
+          <a href="https://x.com" target="_blank" rel="noreferrer" aria-label="Visit our X profile">
             <img
               src="/XIcon.png"
-              alt="X social media icon"
+              alt="X (formerly Twitter) social media icon"
               className="h-8 w-8 hover:opacity-80 transition-opacity"
             />
           </a>
-          <a href="https://facebook.com" target="_blank" rel="noreferrer">
+          <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Visit our Facebook page">
             <img
               src="/FaceBookIcon.png"
               alt="Facebook social media icon"
               className="h-8 w-8 hover:opacity-80 transition-opacity"
             />
           </a>
-          <a href="https://instagram.com" target="_blank" rel="noreferrer">
+          <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Visit our Instagram page">
             <img
               src="/InstagramIcon.png"
               alt="Instagram social media icon"
               className="h-8 w-8 hover:opacity-80 transition-opacity"
             />
           </a>
-          <a href="https://tiktok.com" target="_blank" rel="noreferrer">
+          <a href="https://tiktok.com" target="_blank" rel="noreferrer" aria-label="Visit our TikTok page">
             <img
               src="/TikTokIcon.png"
               alt="TikTok social media icon"
