@@ -92,12 +92,12 @@ export default function Login() {
 
         {/* Global Server Error Alert */}
         {serverError && (
-          <div className="mb-4 w-full p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm font-bold text-center">
+          <div role="alert" aria-live="assertive" className="mb-4 w-full p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm font-bold text-center">
             {serverError}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="w-full space-y-4" noValidate>
+        <form onSubmit={handleSubmit} className="w-full space-y-4" noValidate aria-label="Login form">
           {/* Email Field */}
           <div>
             <label
@@ -111,6 +111,7 @@ export default function Login() {
               placeholder="example@stud.noroff.no"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              aria-invalid={!!serverError}
               className="w-full border border-[#C5A059] rounded-lg px-4 py-2 outline-none focus:ring-1 focus:ring-[#C5A059] text-[#000000] placeholder-[#605F5F] transition-colors"
               required
             />
@@ -129,6 +130,7 @@ export default function Login() {
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              aria-invalid={!!serverError}
               className="w-full border border-[#C5A059] rounded-lg px-4 py-2 outline-none focus:ring-1 focus:ring-[#C5A059] text-[#000000] placeholder-[#605F5F] transition-colors"
               required
             />
@@ -139,9 +141,13 @@ export default function Login() {
             <button
               type="submit"
               disabled={isLoading}
+              aria-busy={isLoading}
+              aria-label={isLoading ? "Signing in..." : "Sign In"}
               className="bg-[#4A1D1A] text-[#C5A059] border border-[#C5A059] rounded-full px-12 py-2 text-lg font-bold hover:bg-[#3A1412] transition-colors disabled:opacity-70 flex items-center justify-center min-w-40 w-full">
               {isLoading ? (
                 <svg
+                  aria-hidden="true"
+                  focusable="false"
                   className="animate-spin h-5 w-5 text-[#C5A059]"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -170,6 +176,7 @@ export default function Login() {
           Don't have an account?{" "}
           <Link
             to="/register"
+            aria-label="Register a new account"
             className="text-[#4A1D1A] hover:text-[#C5A059] transition-colors underline decoration-2 underline-offset-2">
             Register
           </Link>
