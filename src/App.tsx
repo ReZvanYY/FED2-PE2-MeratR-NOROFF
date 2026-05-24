@@ -16,6 +16,7 @@ import AboutPage from "./pages/AboutPage";
 import TermsAndConditionsPage from "./pages/UserTerms";
 import HostTermsPage from "./pages/HostsTerms";
 import PrivacyPolicyPage from "./pages/PrivacyPolicy";
+import ReviewBookingPage from "./pages/ReviewBookingPage";
 
 export default function App() {
   return (
@@ -38,6 +39,7 @@ export default function App() {
           <Route path="/user-terms" element={<TermsAndConditionsPage />}/>
           <Route path="/host-terms" element={<HostTermsPage />}/>
           <Route path="/privacy" element={<PrivacyPolicyPage />}/>
+          <Route path="/review-booking/:id" element={<ReviewBookingPage />}/>
         </Route>
       </Routes>
     </BrowserRouter>
