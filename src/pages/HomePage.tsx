@@ -150,6 +150,7 @@ export default function Home() {
           <input
             type="text"
             placeholder="Search venues..."
+            aria-label="Search venues by name"
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);
@@ -162,11 +163,12 @@ export default function Home() {
         {/* Where / When / Whose Pill */}
         <div className="w-full max-w-2xl border border-[#C5A059] rounded-full bg-[#FFFFFF] shadow-sm flex items-center divide-x divide-[#C5A059]">
           <div className="flex-1 px-6 py-3 flex flex-col justify-center">
-            <span className="text-sm font-bold text-[#000000]">Where</span>
+            <span className="text-sm font-bold text-[#000000]" aria-hidden="true">Where</span>
             <input
               type="text"
               name="country"
               placeholder="Search for Country"
+              aria-label="Filter by country or city"
               value={filters.country}
               onChange={handleFilterChange}
               className="text-xs outline-none text-[#605F5F]"
@@ -174,20 +176,22 @@ export default function Home() {
           </div>
 
           <div className="flex-1 px-6 py-3 flex flex-col justify-center">
-            <span className="text-sm font-bold text-[#000000]">When</span>
+            <span className="text-sm font-bold text-[#000000]" aria-hidden="true">When</span>
             <input
               type="date"
+              aria-label="Filter by date"
               className="text-xs outline-none text-[#605F5F] bg-transparent cursor-pointer"
             />
           </div>
 
           <div className="flex-1 px-6 py-3 flex flex-col justify-center">
-            <span className="text-sm font-bold text-[#000000]">Whose</span>
+            <span className="text-sm font-bold text-[#000000]" aria-hidden="true">Whose</span>
             <input
               type="number"
               name="maxGuests"
               min="1"
               placeholder="Add Guests"
+              aria-label="Filter by number of guests"
               value={filters.maxGuests === 1 ? "" : filters.maxGuests}
               onChange={handleFilterChange}
               className="text-xs outline-none text-[#605F5F]"
@@ -198,19 +202,19 @@ export default function Home() {
 
       {/* Loading & Error States */}
       {isLoading && (
-        <div className="flex justify-center items-center h-64 w-full">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C5A059]"></div>
+        <div className="flex justify-center items-center h-64 w-full" role="status" aria-live="polite">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C5A059]" aria-label="Loading venues"></div>
         </div>
       )}
 
       {error && !isLoading && (
-        <div className="text-center text-red-700 bg-red-50 border border-red-200 p-4 rounded-lg w-full max-w-md mx-auto">
+        <div className="text-center text-red-700 bg-red-50 border border-red-200 p-4 rounded-lg w-full max-w-md mx-auto" role="alert" aria-live="assertive">
           {error}
         </div>
       )}
 
       {!isLoading && !error && currentVenues.length === 0 && (
-        <div className="text-center text-[#000000] text-xl mt-12 font-bold w-full">
+        <div className="text-center text-[#000000] text-xl mt-12 font-bold w-full" role="status" aria-live="polite">
           No venues found matching your criteria.
         </div>
       )}
@@ -229,27 +233,32 @@ export default function Home() {
               <div className="relative">
                 <button
                   onClick={() => setIsFilterOpen(!isFilterOpen)}
+                  aria-expanded={isFilterOpen}
+                  aria-controls="advanced-filters-dropdown"
+                  aria-haspopup="dialog"
                   className="border border-[#C5A059] rounded-full px-8 py-1 text-[#000000] font-bold text-sm hover:bg-[#C5A059]/10 transition-colors">
                   Filter
                 </button>
 
                 {/* Filter Dropdown */}
                 {isFilterOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-72 bg-[#FFFFFF] border-2 border-[#C5A059] rounded-xl p-5 shadow-xl z-50">
+                  <div id="advanced-filters-dropdown" role="dialog" aria-label="Advanced Filters" className="absolute right-0 top-full mt-2 w-72 bg-[#FFFFFF] border-2 border-[#C5A059] rounded-xl p-5 shadow-xl z-50">
                     <h3 className="font-bold text-[#4A1D1A] mb-4 border-b border-[#C5A059]/30 pb-2">
                       Advanced Filters
                     </h3>
 
                     <div className="mb-4">
-                      <label className="block text-sm font-bold text-[#000000] mb-1">
+                      <label htmlFor="maxPrice" className="block text-sm font-bold text-[#000000] mb-1">
                         Max Price: ${filters.maxPrice}
                       </label>
                       <input
+                        id="maxPrice"
                         type="range"
                         name="maxPrice"
                         min="0"
                         max="10000"
                         step="100"
+                        aria-label="Maximum price filter"
                         value={filters.maxPrice}
                         onChange={handleFilterChange}
                         className="w-full accent-[#4A1D1A]"
@@ -263,6 +272,7 @@ export default function Home() {
                           name="wifi"
                           checked={filters.wifi}
                           onChange={handleFilterChange}
+                          aria-label="Filter by WiFi availability"
                           className="accent-[#C5A059]"
                         /> WiFi
                       </label>
@@ -272,6 +282,7 @@ export default function Home() {
                           name="parking"
                           checked={filters.parking}
                           onChange={handleFilterChange}
+                          aria-label="Filter by parking availability"
                           className="accent-[#C5A059]"
                         /> Parking
                       </label>
@@ -281,6 +292,7 @@ export default function Home() {
                           name="breakfast"
                           checked={filters.breakfast}
                           onChange={handleFilterChange}
+                          aria-label="Filter by breakfast availability"
                           className="accent-[#C5A059]"
                         /> Breakfast
                       </label>
@@ -290,6 +302,7 @@ export default function Home() {
                           name="pets"
                           checked={filters.pets}
                           onChange={handleFilterChange}
+                          aria-label="Filter by pet friendliness"
                           className="accent-[#C5A059]"
                         /> Pets
                       </label>
@@ -324,14 +337,15 @@ export default function Home() {
 
       {/* Pagination Controls */}
       {!isLoading && totalPages > 1 && (
-        <div className="flex justify-center items-center gap-6 mt-16 mb-4">
+        <div className="flex justify-center items-center gap-6 mt-16 mb-4" role="navigation" aria-label="Pagination Controls">
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
+            aria-label="Go to previous page"
             className="w-10 h-10 rounded-full border-2 border-[#C5A059] text-[#4A1D1A] font-bold text-xl flex items-center justify-center hover:bg-[#C5A059]/20 disabled:opacity-30 transition-all">
             &lt;
           </button>
-          <span className="text-[#000000] font-bold tracking-wide">
+          <span className="text-[#000000] font-bold tracking-wide" aria-live="polite">
             Page {currentPage} of {totalPages}
           </span>
           <button
@@ -339,6 +353,7 @@ export default function Home() {
               setCurrentPage((prev) => Math.min(prev + 1, totalPages))
             }
             disabled={currentPage === totalPages}
+            aria-label="Go to next page"
             className="w-10 h-10 rounded-full border-2 border-[#C5A059] text-[#4A1D1A] font-bold text-xl flex items-center justify-center hover:bg-[#C5A059]/20 disabled:opacity-30 transition-all">
             &gt;
           </button>
@@ -364,14 +379,14 @@ function VenueCard({ venue }: { venue: Venue }) {
         {venue.media && venue.media.length > 0 ? (
           <img
             src={venue.media[0].url}
-            alt={venue.media[0].alt || venue.name}
+            alt={`Image of ${venue.name}`}
             className="w-full h-full object-cover"
             onError={(e) => {
               (e.target as HTMLImageElement).src = "/fallback-image.jpg";
             }}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-[#605F5F] text-sm font-bold uppercase tracking-wider">
+          <div className="w-full h-full flex items-center justify-center text-[#605F5F] text-sm font-bold uppercase tracking-wider" aria-hidden="true">
             No Image
           </div>
         )}
@@ -390,10 +405,12 @@ function VenueCard({ venue }: { venue: Venue }) {
             viewBox="0 0 24 24" 
             fill="currentColor" 
             className="w-4 h-4 shrink-0"
+            aria-hidden="true"
+            focusable="false"
           >
             <path fillRule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
           </svg>
-          <p className="text-xs font-bold uppercase tracking-wider truncate">
+          <p className="text-xs font-bold uppercase tracking-wider truncate" aria-label={`Location: ${locationText}`}>
             {locationText}
           </p>
         </div>
@@ -403,10 +420,10 @@ function VenueCard({ venue }: { venue: Venue }) {
         </p>
 
         <div className="mt-auto flex justify-between items-end">
-          <p className="font-bold text-[#4A1D1A]">
-            ${venue.price} <span className="text-xs text-[#605F5F] font-normal">/ night</span>
+          <p className="font-bold text-[#4A1D1A]" aria-label={`Price: ${venue.price} dollars per night`}>
+            ${venue.price} <span className="text-xs text-[#605F5F] font-normal" aria-hidden="true">/ night</span>
           </p>
-          <p className="text-[#605F5F] font-bold text-sm">
+          <p className="text-[#605F5F] font-bold text-sm" aria-label={venue.rating > 0 ? `Rating: ${venue.rating} out of 5 stars` : "Unrated, New venue"}>
             {venue.rating > 0 ? `${venue.rating} ★` : "New"}
           </p>
         </div>
