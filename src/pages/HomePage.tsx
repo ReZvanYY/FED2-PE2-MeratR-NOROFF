@@ -143,7 +143,7 @@ export default function Home() {
 
   return (
     <div className="w-full flex-grow flex flex-col font-kadwa p-4 sm:p-8">
-      {/* Top Search Interface (Matching Wireframe) */}
+      {/* Top Search Interface */}
       <div className="w-full flex flex-col items-center mb-8 sm:mb-12 space-y-4">
         {/* Main Search Pill */}
         <div className="w-full max-w-md border border-[#C5A059] rounded-full px-4 sm:px-6 py-2 bg-[#FFFFFF] shadow-sm flex items-center justify-center cursor-text">
@@ -242,7 +242,7 @@ export default function Home() {
 
                 {/* Filter Dropdown */}
                 {isFilterOpen && (
-                  <div id="advanced-filters-dropdown" role="dialog" aria-label="Advanced Filters" className="absolute left-0 sm:left-auto sm:right-0 top-full mt-2 w-[260px] sm:w-72 bg-[#FFFFFF] border-2 border-[#C5A059] rounded-xl p-4 sm:p-5 shadow-xl z-50">
+                  <div id="advanced-filters-dropdown" role="dialog" aria-label="Advanced Filters" className="absolute left-0 sm:left-auto sm:right-0 top-full mt-2 w-65 sm:w-72 bg-[#FFFFFF] border-2 border-[#C5A059] rounded-xl p-4 sm:p-5 shadow-xl z-50">
                     <h3 className="font-bold text-[#4A1D1A] mb-4 border-b border-[#C5A059]/30 pb-2">
                       Advanced Filters
                     </h3>
