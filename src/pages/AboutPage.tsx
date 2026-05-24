@@ -1,7 +1,7 @@
+// A dedicated page to share the story and vision of Ember & Stone, highlighting our unique approach to luxury venue management and our core brand pillars. This page is designed to be visually engaging and informative, using a modular grid layout to showcase our brand essence and values. It also includes a call-to-action for potential venue managers to join our platform, as well as a link for users to contact our team with any questions.
 import { Link } from "react-router-dom";
 
 export default function AboutPage() {
-  
   // Custom values array to feed the modular grid
   const brandPillars = [
     {
@@ -22,24 +22,39 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="w-full flex-grow bg-[#FAF9F6] font-kadwa p-4 md:p-10 flex flex-col items-center">
+    <div 
+      className="w-full flex-grow bg-[#FAF9F6] font-kadwa p-4 md:p-10 flex flex-col items-center"
+      aria-labelledby="about-page-heading"
+    >
       
-      {/* HEADER SECTION: Matching the "Create Listing" Title Style */}
-      <h1 className="text-3xl md:text-5xl font-extrabold text-center text-[#000000] mb-8 tracking-wide uppercase">
+      {/* Header section*/}
+      <h1 
+        id="about-page-heading"
+        className="text-3xl md:text-5xl font-extrabold text-center text-[#000000] mb-8 tracking-wide uppercase"
+      >
         Our Story & Vision
       </h1>
 
       <div className="w-full max-w-5xl flex flex-col gap-12">
         
-        {/* MAIN BRAND CARD: Matching the "Your Venues" Card Style */}
-        <div className="bg-[#FFFFFF] border-[3px] border-[#C5A059] rounded-[3rem] p-8 md:p-16 shadow-sm flex flex-col items-center text-center">
+        {/* Main brand card */}
+        <div 
+          className="bg-[#FFFFFF] border-[3px] border-[#C5A059] rounded-[3rem] p-8 md:p-16 shadow-sm flex flex-col items-center text-center"
+          role="region"
+          aria-labelledby="brand-essence-heading"
+        >
           
           <div className="border border-[#C5A059] rounded-full px-8 py-2 mb-8 bg-[#FAF9F6]">
-            <span className="text-[#4A1D1A] font-bold text-sm tracking-widest uppercase">The Essence</span>
+            <span className="text-[#4A1D1A] font-bold text-sm tracking-widest uppercase" aria-hidden="true">
+              The Essence
+            </span>
           </div>
 
-          <h2 className="text-2xl md:text-4xl font-extrabold text-[#000000] mb-8 leading-tight">
-            Bridging the Gap Between <br className="hidden md:block"/> 
+          <h2 
+            id="brand-essence-heading"
+            className="text-2xl md:text-4xl font-extrabold text-[#000000] mb-8 leading-tight"
+          >
+            Bridging the Gap Between <br className="hidden md:block" aria-hidden="true" /> 
             Raw Elegance and Refined Comfort
           </h2>
 
@@ -53,12 +68,17 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* CORE PILLARS GRID: Modular cards matching the booking request style */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Core Brand Pillars */}
+        <div 
+          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+          role="list"
+          aria-label="Our Core Brand Pillars"
+        >
           {brandPillars.map((pillar, index) => (
             <div 
               key={index} 
               className="bg-[#FFFFFF] border border-[#C5A059] rounded-[2.5rem] p-8 flex flex-col items-center text-center shadow-sm"
+              role="listitem"
             >
               <div className="bg-[#4A1D1A] text-[#C5A059] text-[10px] font-bold px-4 py-1 rounded-full mb-4 tracking-tighter uppercase">
                 {pillar.label}
@@ -73,24 +93,33 @@ export default function AboutPage() {
           ))}
         </div>
 
-        {/* LOWER CALL TO ACTION: Pill-shaped banner */}
-        <div className="w-full flex flex-col items-center gap-6 mt-6">
+        {/* Call to Action */}
+        <div 
+          className="w-full flex flex-col items-center gap-6 mt-6"
+          role="region"
+          aria-labelledby="cta-heading"
+        >
           <div className="w-full md:w-2/3 border border-[#C5A059] rounded-full py-6 px-10 bg-[#FFFFFF] shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="text-center md:text-left">
-              <h4 className="font-extrabold text-[#000000] uppercase tracking-wider">Ready to host?</h4>
+              <h4 id="cta-heading" className="font-extrabold text-[#000000] uppercase tracking-wider">Ready to host?</h4>
               <p className="text-xs font-bold text-[#605F5F]">Join our exclusive collection of venue managers today.</p>
             </div>
             
             <Link 
               to="/become-a-venue-manager"
               className="bg-[#4A1D1A] text-[#C5A059] font-bold text-sm px-10 py-3 rounded-full border-2 border-[#C5A059] hover:bg-[#3A1412] transition-colors whitespace-nowrap"
+              aria-label="List your venue and join our collection of venue managers"
             >
               List Your Venue
             </Link>
           </div>
 
           {/* Minimalist Footer Link */}
-          <Link to="/contact" className="text-[#000000] font-extrabold text-sm hover:text-[#4A1D1A] transition-colors uppercase tracking-widest mt-4">
+          <Link 
+            to="/contact" 
+            className="text-[#000000] font-extrabold text-sm hover:text-[#4A1D1A] transition-colors uppercase tracking-widest mt-4"
+            aria-label="Have questions? Contact our team"
+          >
             Questions? Contact our team
           </Link>
         </div>
