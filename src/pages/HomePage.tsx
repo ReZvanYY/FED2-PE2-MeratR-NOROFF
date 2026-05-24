@@ -142,11 +142,11 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full flex-grow flex flex-col font-kadwa p-8">
+    <div className="w-full flex-grow flex flex-col font-kadwa p-4 sm:p-8">
       {/* Top Search Interface (Matching Wireframe) */}
-      <div className="w-full flex flex-col items-center mb-12 space-y-4">
+      <div className="w-full flex flex-col items-center mb-8 sm:mb-12 space-y-4">
         {/* Main Search Pill */}
-        <div className="w-full max-w-md border border-[#C5A059] rounded-full px-6 py-2 bg-[#FFFFFF] shadow-sm flex items-center justify-center cursor-text">
+        <div className="w-full max-w-md border border-[#C5A059] rounded-full px-4 sm:px-6 py-2 bg-[#FFFFFF] shadow-sm flex items-center justify-center cursor-text">
           <input
             type="text"
             placeholder="Search venues..."
@@ -161,8 +161,8 @@ export default function Home() {
         </div>
 
         {/* Where / When / Whose Pill */}
-        <div className="w-full max-w-2xl border border-[#C5A059] rounded-full bg-[#FFFFFF] shadow-sm flex items-center divide-x divide-[#C5A059]">
-          <div className="flex-1 px-6 py-3 flex flex-col justify-center">
+        <div className="w-full max-w-2xl border border-[#C5A059] rounded-3xl sm:rounded-full bg-[#FFFFFF] shadow-sm flex flex-col sm:flex-row items-center divide-y sm:divide-y-0 sm:divide-x divide-[#C5A059]">
+          <div className="w-full sm:w-auto flex-1 px-4 py-3 sm:px-6 flex flex-col justify-center items-center sm:items-start text-center sm:text-left">
             <span className="text-sm font-bold text-[#000000]" aria-hidden="true">Where</span>
             <input
               type="text"
@@ -171,20 +171,20 @@ export default function Home() {
               aria-label="Filter by country or city"
               value={filters.country}
               onChange={handleFilterChange}
-              className="text-xs outline-none text-[#605F5F]"
+              className="w-full text-center sm:text-left text-xs outline-none text-[#605F5F]"
             />
           </div>
 
-          <div className="flex-1 px-6 py-3 flex flex-col justify-center">
+          <div className="w-full sm:w-auto flex-1 px-4 py-3 sm:px-6 flex flex-col justify-center items-center sm:items-start text-center sm:text-left">
             <span className="text-sm font-bold text-[#000000]" aria-hidden="true">When</span>
             <input
               type="date"
               aria-label="Filter by date"
-              className="text-xs outline-none text-[#605F5F] bg-transparent cursor-pointer"
+              className="w-full text-center sm:text-left text-xs outline-none text-[#605F5F] bg-transparent cursor-pointer"
             />
           </div>
 
-          <div className="flex-1 px-6 py-3 flex flex-col justify-center">
+          <div className="w-full sm:w-auto flex-1 px-4 py-3 sm:px-6 flex flex-col justify-center items-center sm:items-start text-center sm:text-left">
             <span className="text-sm font-bold text-[#000000]" aria-hidden="true">Whose</span>
             <input
               type="number"
@@ -194,7 +194,7 @@ export default function Home() {
               aria-label="Filter by number of guests"
               value={filters.maxGuests === 1 ? "" : filters.maxGuests}
               onChange={handleFilterChange}
-              className="text-xs outline-none text-[#605F5F]"
+              className="w-full text-center sm:text-left text-xs outline-none text-[#605F5F]"
             />
           </div>
         </div>
@@ -221,28 +221,28 @@ export default function Home() {
 
       {/* Grid Rendering */}
       {!isLoading && !error && currentVenues.length > 0 && (
-        <div className="w-full flex flex-col space-y-12">
+        <div className="w-full flex flex-col space-y-8 sm:space-y-12">
           {/* Row 1: Popular Choices */}
           <div>
-            <div className="flex justify-between items-end mb-6 border-b-2 border-transparent relative">
-              <h2 className="text-xl font-bold text-[#000000] uppercase tracking-wide">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 sm:gap-0 mb-6 border-b-2 border-transparent relative">
+              <h2 className="text-lg sm:text-xl font-bold text-[#000000] uppercase tracking-wide">
                 Popular Choices Right Now!
               </h2>
 
               {/* Filter Toggle Button */}
-              <div className="relative">
+              <div className="relative w-full sm:w-auto">
                 <button
                   onClick={() => setIsFilterOpen(!isFilterOpen)}
                   aria-expanded={isFilterOpen}
                   aria-controls="advanced-filters-dropdown"
                   aria-haspopup="dialog"
-                  className="border border-[#C5A059] rounded-full px-8 py-1 text-[#000000] font-bold text-sm hover:bg-[#C5A059]/10 transition-colors">
+                  className="w-full sm:w-auto border border-[#C5A059] rounded-full px-8 py-2 sm:py-1 text-[#000000] font-bold text-sm hover:bg-[#C5A059]/10 transition-colors">
                   Filter
                 </button>
 
                 {/* Filter Dropdown */}
                 {isFilterOpen && (
-                  <div id="advanced-filters-dropdown" role="dialog" aria-label="Advanced Filters" className="absolute right-0 top-full mt-2 w-72 bg-[#FFFFFF] border-2 border-[#C5A059] rounded-xl p-5 shadow-xl z-50">
+                  <div id="advanced-filters-dropdown" role="dialog" aria-label="Advanced Filters" className="absolute left-0 sm:left-auto sm:right-0 top-full mt-2 w-[260px] sm:w-72 bg-[#FFFFFF] border-2 border-[#C5A059] rounded-xl p-4 sm:p-5 shadow-xl z-50">
                     <h3 className="font-bold text-[#4A1D1A] mb-4 border-b border-[#C5A059]/30 pb-2">
                       Advanced Filters
                     </h3>
@@ -312,7 +312,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
               {popularChoices.map((venue) => (
                 <VenueCard key={venue.id} venue={venue} />
               ))}
@@ -322,10 +322,10 @@ export default function Home() {
           {/* Row 2: Next Adventure */}
           {nextAdventure.length > 0 && (
             <div className="pt-4">
-              <h2 className="text-xl font-bold text-[#000000] uppercase tracking-wide mb-6">
+              <h2 className="text-lg sm:text-xl font-bold text-[#000000] uppercase tracking-wide mb-6">
                 Book Your Next Adventure!
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
                 {nextAdventure.map((venue) => (
                   <VenueCard key={venue.id} venue={venue} />
                 ))}
@@ -337,7 +337,7 @@ export default function Home() {
 
       {/* Pagination Controls */}
       {!isLoading && totalPages > 1 && (
-        <div className="flex justify-center items-center gap-6 mt-16 mb-4" role="navigation" aria-label="Pagination Controls">
+        <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 mt-12 sm:mt-16 mb-4" role="navigation" aria-label="Pagination Controls">
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
@@ -375,7 +375,7 @@ function VenueCard({ venue }: { venue: Venue }) {
       className="bg-[#FFFFFF] border border-[#C5A059] rounded-3xl flex flex-col hover:shadow-lg transition-all duration-300 overflow-hidden">
       
       {/* Image Area */}
-      <div className="w-full h-48 bg-[#FAF9F6] border-b border-[#C5A059]">
+      <div className="w-full h-40 sm:h-48 bg-[#FAF9F6] border-b border-[#C5A059]">
         {venue.media && venue.media.length > 0 ? (
           <img
             src={venue.media[0].url}
