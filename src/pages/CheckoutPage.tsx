@@ -4,7 +4,6 @@ import { useLocation, useNavigate, Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { type CheckoutState } from "../types/booking";
 
-
 export default function CheckoutPage() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -109,18 +108,27 @@ export default function CheckoutPage() {
   };
 
   return (
-    <div className="w-full flex-grow flex justify-center p-4 md:p-8 font-kadwa">
+    <div 
+      className="w-full flex-grow flex justify-center p-4 md:p-8 font-kadwa"
+      aria-labelledby="checkout-heading"
+    >
       <div className="w-full max-w-7xl flex flex-col lg:flex-row gap-12 mt-4">
         {/* Checkout Form */}
         <div className="w-full lg:w-100 shrink-0">
           <form
             onSubmit={handleConfirmAndPay}
+            aria-label="Checkout flow"
             className="bg-[#FFFFFF] rounded-3xl p-6 md:p-8 shadow-xl border border-[#FAF9F6]">
+            
             {/* Reservation Summary */}
-            <h3 className="font-bold text-lg text-[#000000] mb-2 pl-1">
+            <h3 id="reservation-heading" className="font-bold text-lg text-[#000000] mb-2 pl-1">
               Reservation
             </h3>
-            <div className="border border-[#C5A059] rounded-xl flex flex-col mb-6 overflow-hidden bg-[#FAF9F6]">
+            <div 
+              role="group"
+              aria-labelledby="reservation-heading"
+              className="border border-[#C5A059] rounded-xl flex flex-col mb-6 overflow-hidden bg-[#FAF9F6]"
+            >
               <div className="grid grid-cols-2 divide-x divide-[#C5A059] border-b border-[#C5A059]">
                 <div className="p-3 text-center flex flex-col justify-center">
                   <span className="text-xs font-bold text-[#605F5F] uppercase mb-1">
@@ -150,16 +158,21 @@ export default function CheckoutPage() {
             </div>
 
             {/* Contact Information */}
-            <h3 className="font-bold text-lg text-[#000000] mb-2 pl-1">
+            <h3 id="contact-heading" className="font-bold text-lg text-[#000000] mb-2 pl-1">
               Contact Information
             </h3>
-            <div className="border border-[#C5A059] rounded-xl flex flex-col mb-8 overflow-hidden divide-y divide-[#C5A059]">
+            <div 
+              role="group"
+              aria-labelledby="contact-heading"
+              className="border border-[#C5A059] rounded-xl flex flex-col mb-8 overflow-hidden divide-y divide-[#C5A059]"
+            >
               {/* Name & Surname */}
               <div className="grid grid-cols-2 divide-x divide-[#C5A059]">
                 <input
                   type="text"
                   name="name"
                   placeholder="Name"
+                  aria-label="First Name"
                   required
                   value={formData.name}
                   onChange={handleInputChange}
@@ -169,6 +182,7 @@ export default function CheckoutPage() {
                   type="text"
                   name="surname"
                   placeholder="Surname"
+                  aria-label="Surname"
                   required
                   value={formData.surname}
                   onChange={handleInputChange}
@@ -181,6 +195,7 @@ export default function CheckoutPage() {
                 type="text"
                 name="address"
                 placeholder="Address"
+                aria-label="Address"
                 required
                 value={formData.address}
                 onChange={handleInputChange}
@@ -193,6 +208,7 @@ export default function CheckoutPage() {
                   type="text"
                   name="city"
                   placeholder="City"
+                  aria-label="City"
                   required
                   value={formData.city}
                   onChange={handleInputChange}
@@ -202,6 +218,7 @@ export default function CheckoutPage() {
                   type="text"
                   name="postalCode"
                   placeholder="Postal Code"
+                  aria-label="Postal Code"
                   required
                   value={formData.postalCode}
                   onChange={handleInputChange}
@@ -214,6 +231,7 @@ export default function CheckoutPage() {
                 type="tel"
                 name="phone"
                 placeholder="Phone Number"
+                aria-label="Phone Number"
                 required
                 value={formData.phone}
                 onChange={handleInputChange}
@@ -225,6 +243,7 @@ export default function CheckoutPage() {
                 type="email"
                 name="email"
                 placeholder="Email Address (For Receipt)"
+                aria-label="Email Address for Receipt"
                 required
                 value={formData.email}
                 onChange={handleInputChange}
@@ -233,25 +252,35 @@ export default function CheckoutPage() {
             </div>
 
             {/* Payment Method */}
-            <h3 className="font-bold text-lg text-[#000000] mb-2 pl-1">
+            <h3 id="payment-heading" className="font-bold text-lg text-[#000000] mb-2 pl-1">
               Payment Method
             </h3>
-            <div className="flex flex-col space-y-3 mb-6">
+            <div 
+              role="group"
+              aria-labelledby="payment-heading"
+              className="flex flex-col space-y-3 mb-6"
+            >
               {/* Credit Card Section */}
               <div
                 className={`border rounded-xl transition-colors overflow-hidden ${paymentMethod === "card" ? "border-[3px] border-[#4A1D1A] bg-[#FAF9F6]" : "border-[#C5A059]"}`}>
                 <button
                   type="button"
                   onClick={() => setPaymentMethod("card")}
+                  aria-expanded={paymentMethod === "card"}
+                  aria-controls="card-payment-section"
                   className="w-full py-3 font-bold text-sm flex justify-center items-center gap-2">
-                  💳 Credit Or Debit Card
+                  <span aria-hidden="true">💳</span> Credit Or Debit Card
                 </button>
                 {paymentMethod === "card" && (
-                  <div className="border border-[#C5A059] rounded-xl flex flex-col overflow-hidden divide-y divide-[#C5A059] bg-[#FFFFFF] mx-4 mb-4">
+                  <div 
+                    id="card-payment-section"
+                    className="border border-[#C5A059] rounded-xl flex flex-col overflow-hidden divide-y divide-[#C5A059] bg-[#FFFFFF] mx-4 mb-4"
+                  >
                     <input
                       type="text"
                       name="nameOnCard"
                       placeholder="Name on card"
+                      aria-label="Name on card"
                       required={paymentMethod === "card"}
                       value={formData.nameOnCard}
                       onChange={handleInputChange}
@@ -261,6 +290,7 @@ export default function CheckoutPage() {
                       type="text"
                       name="cardNumber"
                       placeholder="Card number"
+                      aria-label="Card number"
                       required={paymentMethod === "card"}
                       value={formData.cardNumber}
                       onChange={handleInputChange}
@@ -271,6 +301,7 @@ export default function CheckoutPage() {
                         type="text"
                         name="expiryDate"
                         placeholder="MM/YY"
+                        aria-label="Expiration Date (MM/YY)"
                         required={paymentMethod === "card"}
                         value={formData.expiryDate}
                         onChange={handleInputChange}
@@ -280,6 +311,7 @@ export default function CheckoutPage() {
                         type="text"
                         name="cvc"
                         placeholder="CVC"
+                        aria-label="CVC code"
                         required={paymentMethod === "card"}
                         maxLength={4}
                         value={formData.cvc}
@@ -297,15 +329,21 @@ export default function CheckoutPage() {
                 <button
                   type="button"
                   onClick={() => setPaymentMethod("klarna")}
+                  aria-expanded={paymentMethod === "klarna"}
+                  aria-controls="klarna-payment-section"
                   className="w-full py-3 font-bold text-sm flex items-center justify-center gap-2">
                   <span className="text-[#FFB3C7]">Klarna.</span>
                 </button>
                 {paymentMethod === "klarna" && (
-                  <div className="border border-[#C5A059] rounded-xl flex flex-col overflow-hidden bg-[#FFFFFF] mx-4 mb-4">
+                  <div 
+                    id="klarna-payment-section"
+                    className="border border-[#C5A059] rounded-xl flex flex-col overflow-hidden bg-[#FFFFFF] mx-4 mb-4"
+                  >
                     <input
                       type="text"
                       name="klarnaId"
                       placeholder="Birth Date (11 digits)"
+                      aria-label="Klarna Identity Number (11 digits)"
                       required={paymentMethod === "klarna"}
                       pattern="\d{11}"
                       maxLength={11}
@@ -324,15 +362,21 @@ export default function CheckoutPage() {
                 <button
                   type="button"
                   onClick={() => setPaymentMethod("vipps")}
+                  aria-expanded={paymentMethod === "vipps"}
+                  aria-controls="vipps-payment-section"
                   className="w-full py-3 font-bold text-sm flex items-center justify-center gap-2">
                   <span className="text-[#FF5B24]">vips</span>
                 </button>
                 {paymentMethod === "vipps" && (
-                  <div className="border border-[#C5A059] rounded-xl flex flex-col overflow-hidden bg-[#FFFFFF] mx-4 mb-4">
+                  <div 
+                    id="vipps-payment-section"
+                    className="border border-[#C5A059] rounded-xl flex flex-col overflow-hidden bg-[#FFFFFF] mx-4 mb-4"
+                  >
                     <input
                       type="tel"
                       name="vippsPhone"
                       placeholder="Phone Number"
+                      aria-label="Vipps Phone Number"
                       required={paymentMethod === "vipps"}
                       value={formData.vippsPhone}
                       onChange={handleInputChange}
@@ -348,6 +392,7 @@ export default function CheckoutPage() {
               <input
                 type="checkbox"
                 checked={agreed}
+                aria-required="true"
                 onChange={(e) => setAgreed(e.target.checked)}
                 className="mt-1 accent-[#C5A059] cursor-pointer"
               />
@@ -361,6 +406,7 @@ export default function CheckoutPage() {
               <button
                 type="submit"
                 disabled={isProcessing}
+                aria-busy={isProcessing}
                 className="bg-[#4A1D1A] text-[#C5A059] font-bold py-3 px-8 rounded-full shadow-md hover:bg-[#3A1412] disabled:opacity-70 transition-colors w-55">
                 {isProcessing ? "Processing..." : "Confirm Reservation"}
               </button>
@@ -377,7 +423,7 @@ export default function CheckoutPage() {
 
         {/* Venue Details Display */}
         <div className="w-full flex-grow flex flex-col pl-0 lg:pl-8 pt-4">
-          <h1 className="text-3xl md:text-5xl font-extrabold text-[#000000] uppercase tracking-wide mb-6">
+          <h1 id="checkout-heading" className="text-3xl md:text-5xl font-extrabold text-[#000000] uppercase tracking-wide mb-6">
             {venue.name}
           </h1>
 
@@ -385,12 +431,15 @@ export default function CheckoutPage() {
             {venue.media && venue.media.length > 0 ? (
               <img
                 src={venue.media[0].url}
-                alt={venue.media[0].alt || venue.name}
+                alt={venue.media[0].alt || `Image of ${venue.name}`}
                 className="w-full h-full object-cover"
                 onError={(e) => (e.currentTarget.src = "/fallback-image.jpg")}
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center font-bold text-[#605F5F]">
+              <div 
+                className="w-full h-full flex items-center justify-center font-bold text-[#605F5F]"
+                aria-label="No image available for this venue"
+              >
                 venue picture
               </div>
             )}
@@ -400,7 +449,7 @@ export default function CheckoutPage() {
             <div className="flex items-center gap-3">
               <img
                 src={venue.owner?.avatar?.url || "/ProfilePageGenericIcon.png"}
-                alt="Venue Owner"
+                alt={`Avatar of ${venue.owner?.name || "Unknown Owner"}`}
                 className="w-12 h-12 rounded-full border-2 border-[#C5A059] object-cover bg-[#FAF9F6]"
                 onError={(e) =>
                   (e.currentTarget.src = "/ProfilePageGenericIcon.png")
@@ -409,9 +458,13 @@ export default function CheckoutPage() {
               <span>Venue owner: {venue.owner?.name || "Unknown"}</span>
             </div>
             <span>
-              Venue rating: {venue.rating > 0 ? `${venue.rating} ★` : "Unrated"}
+              <span className="sr-only">Rating: </span>
+              {venue.rating > 0 ? `${venue.rating} ★` : "Unrated"}
             </span>
-            <span>Venue price: ${venue.price} / night</span>
+            <span>
+              <span className="sr-only">Price: </span>
+              ${venue.price} / night
+            </span>
           </div>
         </div>
       </div>
