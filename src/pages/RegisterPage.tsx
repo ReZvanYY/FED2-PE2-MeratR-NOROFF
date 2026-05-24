@@ -128,12 +128,12 @@ export default function RegisterPage() {
 
         {/* Global Server Error Alert */}
         {serverError && (
-          <div className="mb-4 w-full p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm font-bold text-center">
+          <div role="alert" aria-live="assertive" className="mb-4 w-full p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm font-bold text-center">
             {serverError}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="w-full space-y-4" noValidate>
+        <form onSubmit={handleSubmit} className="w-full space-y-4" noValidate aria-label="Registration form">
           {/* Name Field */}
           <div>
             <label
@@ -148,10 +148,12 @@ export default function RegisterPage() {
               value={formData.name}
               onChange={handleChange}
               placeholder="John"
+              aria-invalid={!!errors.name}
+              aria-describedby={errors.name ? "name-error" : undefined}
               className="w-full border border-[#C5A059] rounded-lg px-4 py-2 outline-none focus:ring-1 focus:ring-[#C5A059] text-[#000000] placeholder-[#605F5F] transition-colors"
             />
             {errors.name && (
-              <p className="mt-1 text-xs text-red-500 font-bold">
+              <p id="name-error" role="alert" className="mt-1 text-xs text-red-500 font-bold">
                 {errors.name}
               </p>
             )}
@@ -171,10 +173,12 @@ export default function RegisterPage() {
               value={formData.surname}
               onChange={handleChange}
               placeholder="Doe"
+              aria-invalid={!!errors.surname}
+              aria-describedby={errors.surname ? "surname-error" : undefined}
               className="w-full border border-[#C5A059] rounded-lg px-4 py-2 outline-none focus:ring-1 focus:ring-[#C5A059] text-[#000000] placeholder-[#605F5F] transition-colors"
             />
             {errors.surname && (
-              <p className="mt-1 text-xs text-red-500 font-bold">
+              <p id="surname-error" role="alert" className="mt-1 text-xs text-red-500 font-bold">
                 {errors.surname}
               </p>
             )}
@@ -194,10 +198,12 @@ export default function RegisterPage() {
               value={formData.email}
               onChange={handleChange}
               placeholder="Example@stud.noroff.no"
+              aria-invalid={!!errors.email}
+              aria-describedby={errors.email ? "email-error" : undefined}
               className="w-full border border-[#C5A059] rounded-lg px-4 py-2 outline-none focus:ring-1 focus:ring-[#C5A059] text-[#000000] placeholder-[#605F5F] transition-colors"
             />
             {errors.email && (
-              <p className="mt-1 text-xs text-red-500 font-bold">
+              <p id="email-error" role="alert" className="mt-1 text-xs text-red-500 font-bold">
                 {errors.email}
               </p>
             )}
@@ -217,10 +223,12 @@ export default function RegisterPage() {
               value={formData.password}
               onChange={handleChange}
               placeholder="Enter wanted password"
+              aria-invalid={!!errors.password}
+              aria-describedby={errors.password ? "password-error" : undefined}
               className="w-full border border-[#C5A059] rounded-lg px-4 py-2 outline-none focus:ring-1 focus:ring-[#C5A059] text-[#000000] placeholder-[#605F5F] transition-colors"
             />
             {errors.password && (
-              <p className="mt-1 text-xs text-red-500 font-bold">
+              <p id="password-error" role="alert" className="mt-1 text-xs text-red-500 font-bold">
                 {errors.password}
               </p>
             )}
@@ -240,10 +248,12 @@ export default function RegisterPage() {
               value={formData.confirmPassword}
               onChange={handleChange}
               placeholder="Re-enter wanted password"
+              aria-invalid={!!errors.confirmPassword}
+              aria-describedby={errors.confirmPassword ? "confirmPassword-error" : undefined}
               className="w-full border border-[#C5A059] rounded-lg px-4 py-2 outline-none focus:ring-1 focus:ring-[#C5A059] text-[#000000] placeholder-[#605F5F] transition-colors"
             />
             {errors.confirmPassword && (
-              <p className="mt-1 text-xs text-red-500 font-bold">
+              <p id="confirmPassword-error" role="alert" className="mt-1 text-xs text-red-500 font-bold">
                 {errors.confirmPassword}
               </p>
             )}
@@ -254,9 +264,13 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={isLoading}
+              aria-busy={isLoading}
+              aria-label={isLoading ? "Registering account..." : "Register"}
               className="bg-[#4A1D1A] text-[#C5A059] border border-[#C5A059] rounded-full px-12 py-2 text-lg font-bold hover:bg-[#3A1412] transition-colors disabled:opacity-70 flex items-center justify-center min-w-40">
               {isLoading ? (
                 <svg
+                  aria-hidden="true"
+                  focusable="false"
                   className="animate-spin h-5 w-5 text-[#C5A059]"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
