@@ -186,8 +186,13 @@ export default function DashboardPage() {
 
   if (isLoading) {
     return (
-      <div className="w-full flex-grow flex justify-center items-center font-kadwa" role="status" aria-live="polite">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C5A059]" aria-label="Loading dashboard data"></div>
+      <div
+        className="w-full flex-grow flex justify-center items-center font-kadwa"
+        role="status"
+        aria-live="polite">
+        <div
+          className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C5A059]"
+          aria-label="Loading dashboard data"></div>
       </div>
     );
   }
@@ -199,7 +204,10 @@ export default function DashboardPage() {
       </h1>
 
       {error && (
-        <div className="max-w-7xl mx-auto bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-8 text-center font-bold" role="alert" aria-live="assertive">
+        <div
+          className="max-w-7xl mx-auto bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-8 text-center font-bold"
+          role="alert"
+          aria-live="assertive">
           {error}
         </div>
       )}
@@ -232,7 +240,10 @@ export default function DashboardPage() {
             </Link>
           </div>
 
-          <div className="flex flex-col gap-5 max-h-150 overflow-y-auto pr-2 custom-scrollbar" role="list" aria-label="List of your venues">
+          <div
+            className="flex flex-col gap-5 max-h-150 overflow-y-auto pr-2 custom-scrollbar"
+            role="list"
+            aria-label="List of your venues">
             {venues.length > 0 ? (
               venues.map((venue) => {
                 const venueLocationText =
@@ -250,7 +261,9 @@ export default function DashboardPage() {
                       {venue.media && venue.media.length > 0 ? (
                         <img
                           src={venue.media[0].url}
-                          alt={venue.media[0].alt || `Thumbnail of ${venue.name}`}
+                          alt={
+                            venue.media[0].alt || `Thumbnail of ${venue.name}`
+                          }
                           className="w-full h-full object-cover"
                           onError={(e) => {
                             (e.target as HTMLImageElement).src =
@@ -258,7 +271,9 @@ export default function DashboardPage() {
                           }}
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-xs font-bold text-[#605F5F] uppercase text-center p-2" aria-hidden="true">
+                        <div
+                          className="w-full h-full flex items-center justify-center text-xs font-bold text-[#605F5F] uppercase text-center p-2"
+                          aria-hidden="true">
                           Venue Image
                         </div>
                       )}
@@ -285,7 +300,9 @@ export default function DashboardPage() {
                               clipRule="evenodd"
                             />
                           </svg>
-                          <p className="text-xs font-bold uppercase tracking-wider truncate max-w-55" aria-label={`Location: ${venueLocationText}`}>
+                          <p
+                            className="text-xs font-bold uppercase tracking-wider truncate max-w-55"
+                            aria-label={`Location: ${venueLocationText}`}>
                             {venueLocationText}
                           </p>
                         </div>
@@ -324,7 +341,10 @@ export default function DashboardPage() {
             Venue Requested
           </h2>
 
-          <div className="flex flex-col gap-5 max-h-150 overflow-y-auto pr-2 custom-scrollbar" role="list" aria-label="List of requested bookings">
+          <div
+            className="flex flex-col gap-5 max-h-150 overflow-y-auto pr-2 custom-scrollbar"
+            role="list"
+            aria-label="List of requested bookings">
             {upcomingBookings.length > 0 ? (
               upcomingBookings.map((booking) => {
                 const nights = calculateNights(
@@ -354,7 +374,9 @@ export default function DashboardPage() {
                           }}
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-xs font-bold text-[#605F5F] uppercase text-center p-2" aria-hidden="true">
+                        <div
+                          className="w-full h-full flex items-center justify-center text-xs font-bold text-[#605F5F] uppercase text-center p-2"
+                          aria-hidden="true">
                           Venue Image
                         </div>
                       )}
@@ -381,7 +403,9 @@ export default function DashboardPage() {
                               clipRule="evenodd"
                             />
                           </svg>
-                          <p className="text-xs font-bold uppercase tracking-wider truncate max-w-55" aria-label={`Location: ${bookingLocationText}`}>
+                          <p
+                            className="text-xs font-bold uppercase tracking-wider truncate max-w-55"
+                            aria-label={`Location: ${bookingLocationText}`}>
                             {bookingLocationText}
                           </p>
                         </div>
@@ -389,17 +413,23 @@ export default function DashboardPage() {
 
                       <div className="flex flex-col lg:flex-row justify-between w-full mt-8 lg:mt-0 items-center lg:items-start">
                         <div className="text-sm font-bold text-[#000000] space-y-1 mb-4 lg:mb-0 text-center lg:text-left">
-                          <p aria-label={`Staying for ${nights} ${nights !== 1 ? "nights" : "night"}`}>
+                          <p
+                            aria-label={`Staying for ${nights} ${nights !== 1 ? "nights" : "night"}`}>
                             Staying for: {nights} night{nights !== 1 ? "s" : ""}
                           </p>
-                          <p aria-label={`Number of guests: ${booking.guests}`}>Guests: {booking.guests}</p>
-                          <p aria-label={`Price per night: $${booking.venuePrice}`}>Price: ${booking.venuePrice} per night</p>
+                          <p aria-label={`Number of guests: ${booking.guests}`}>
+                            Guests: {booking.guests}
+                          </p>
+                          <p
+                            aria-label={`Price per night: $${booking.venuePrice}`}>
+                            Price: ${booking.venuePrice} per night
+                          </p>
                         </div>
 
                         {/* Action Buttons */}
                         <div className="flex flex-col items-center gap-2">
                           <Link
-                            to={`/venues/${booking.venue?.id || ""}`}
+                            to={`/review-booking/${booking.id}`}
                             aria-label={`Review booking for ${booking.venueName}`}
                             className="bg-[#4A1D1A] text-[#C5A059] border-2 border-[#4A1D1A] font-bold py-2 px-6 rounded-full shadow-md hover:bg-[#3A1412] transition-colors text-sm w-44 text-center">
                             Review Booking
