@@ -100,8 +100,8 @@ export default function SpecificVenuePage() {
 
   if (isLoading) {
     return (
-      <div className="w-full flex-grow flex justify-center items-center h-64 font-kadwa">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C5A059]"></div>
+      <div className="w-full flex-grow flex justify-center items-center h-64 font-kadwa" aria-live="polite" aria-busy="true">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C5A059]" role="status" aria-label="Loading venue details"></div>
       </div>
     );
   }
@@ -109,7 +109,7 @@ export default function SpecificVenuePage() {
   if (error || !venue) {
     return (
       <div className="w-full flex-grow flex justify-center items-center font-kadwa p-8">
-        <div className="text-center text-[#4A1D1A] font-bold text-xl">
+        <div className="text-center text-[#4A1D1A] font-bold text-xl" role="alert" aria-live="assertive">
           {error || "Venue not found."}
         </div>
       </div>
@@ -132,12 +132,12 @@ export default function SpecificVenuePage() {
           {mainImage ? (
             <img
               src={mainImage}
-              alt={venue.name}
+              alt={`Main view of ${venue.name}`}
               className="w-full h-full object-cover"
               onError={(e) => (e.currentTarget.src = "/fallback-image.jpg")}
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-[#605F5F] font-bold">
+            <div className="w-full h-full flex items-center justify-center text-[#605F5F] font-bold" aria-label="No main image available">
               No Image Available
             </div>
           )}
@@ -148,12 +148,12 @@ export default function SpecificVenuePage() {
             {subImage1 ? (
               <img
                 src={subImage1}
-                alt={`${venue.name} 2`}
+                alt={`Additional view 1 of ${venue.name}`}
                 className="w-full h-full object-cover"
                 onError={(e) => (e.currentTarget.style.display = "none")}
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-[#605F5F]/50 text-sm">
+              <div className="w-full h-full flex items-center justify-center text-[#605F5F]/50 text-sm" aria-label="No additional image available">
                 Venue Picture
               </div>
             )}
@@ -162,12 +162,12 @@ export default function SpecificVenuePage() {
             {subImage2 ? (
               <img
                 src={subImage2}
-                alt={`${venue.name} 3`}
+                alt={`Additional view 2 of ${venue.name}`}
                 className="w-full h-full object-cover"
                 onError={(e) => (e.currentTarget.style.display = "none")}
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-[#605F5F]/50 text-sm">
+              <div className="w-full h-full flex items-center justify-center text-[#605F5F]/50 text-sm" aria-label="No additional image available">
                 Venue Picture
               </div>
             )}
@@ -181,7 +181,7 @@ export default function SpecificVenuePage() {
           <div className="flex items-center gap-6 mb-8 border-b border-[#C5A059]/30 pb-8">
             <img
               src={venue.owner?.avatar?.url || "/ProfilePageGenericIcon.png"}
-              alt={venue.owner?.name || "Owner"}
+              alt={`Avatar for host ${venue.owner?.name || "Unknown Owner"}`}
               className="w-20 h-20 rounded-full object-cover border-2 border-[#C5A059]"
               onError={(e) =>
                 (e.currentTarget.src = "/ProfilePageGenericIcon.png")
@@ -191,9 +191,9 @@ export default function SpecificVenuePage() {
               <p className="font-bold text-xl text-[#000000]">
                 Hosted by {venue.owner?.name || "Unknown Owner"}
               </p>
-              <p className="text-[#605F5F] font-bold">
+              <p className="text-[#605F5F] font-bold" aria-label={`Venue rating: ${venue.rating > 0 ? venue.rating + ' out of 5 stars' : 'Unrated'}`}>
                 Venue rating:{" "}
-                {venue.rating > 0 ? `${venue.rating} ★` : "Unrated"}
+                <span aria-hidden="true">{venue.rating > 0 ? `${venue.rating} ★` : "Unrated"}</span>
               </p>
             </div>
           </div>
@@ -208,27 +208,27 @@ export default function SpecificVenuePage() {
             <h3 className="text-xl font-bold text-[#000000] mb-4">
               Venue Amenities
             </h3>
-            <ul className="grid grid-cols-2 gap-y-4 gap-x-8 text-[#000000] font-bold">
+            <ul className="grid grid-cols-2 gap-y-4 gap-x-8 text-[#000000] font-bold" aria-label="List of venue amenities">
               <li className="flex items-center gap-3">
-                <span className="text-[#C5A059] text-xl">
+                <span className="text-[#C5A059] text-xl" aria-hidden="true">
                   {venue.meta.wifi ? "✓" : "✕"}
                 </span>
                 {venue.meta.wifi ? "Wi-Fi" : "No Wi-Fi"}
               </li>
               <li className="flex items-center gap-3">
-                <span className="text-[#C5A059] text-xl">
+                <span className="text-[#C5A059] text-xl" aria-hidden="true">
                   {venue.meta.parking ? "✓" : "✕"}
                 </span>
                 {venue.meta.parking ? "Free Parking" : "No Parking"}
               </li>
               <li className="flex items-center gap-3">
-                <span className="text-[#C5A059] text-xl">
+                <span className="text-[#C5A059] text-xl" aria-hidden="true">
                   {venue.meta.breakfast ? "✓" : "✕"}
                 </span>
                 {venue.meta.breakfast ? "Breakfast Included" : "No Breakfast"}
               </li>
               <li className="flex items-center gap-3">
-                <span className="text-[#C5A059] text-xl">
+                <span className="text-[#C5A059] text-xl" aria-hidden="true">
                   {venue.meta.pets ? "✓" : "✕"}
                 </span>
                 {venue.meta.pets ? "Pets Allowed" : "No Pets"}
@@ -240,13 +240,14 @@ export default function SpecificVenuePage() {
         <div className="lg:col-span-1">
           <form
             onSubmit={handleBooking}
+            aria-label="Venue booking form"
             className="bg-[#FFFFFF] border-[3px] border-[#FAF9F6] rounded-3xl p-8 shadow-[0_4px_20px_rgba(0,0,0,0.05)] sticky top-24">
             <h2 className="text-2xl font-bold text-[#000000] mb-2">
               Book Me Now
             </h2>
-            <p className="text-[#4A1D1A] font-bold text-xl mb-6">
+            <p className="text-[#4A1D1A] font-bold text-xl mb-6" aria-label={`Price per night: $${venue.price}`}>
               ${venue.price}{" "}
-              <span className="text-[#605F5F] text-sm font-normal">
+              <span className="text-[#605F5F] text-sm font-normal" aria-hidden="true">
                 / night
               </span>
             </p>
@@ -254,10 +255,11 @@ export default function SpecificVenuePage() {
             <div className="border border-[#C5A059] rounded-xl overflow-visible mb-8 relative z-10 bg-[#FFFFFF]">
               <div className="grid grid-cols-2 border-b border-[#C5A059] divide-x divide-[#C5A059]">
                 <div className="p-3 flex flex-col">
-                  <label className="text-xs font-bold text-[#000000] uppercase mb-1">
+                  <label htmlFor="dateFrom" className="text-xs font-bold text-[#000000] uppercase mb-1">
                     Check in
                   </label>
                   <DatePicker
+                    id="dateFrom"
                     selected={bookingData.dateFrom}
                     onChange={(date: Date | null) => 
                       setBookingData({ ...bookingData, dateFrom: date })
@@ -268,14 +270,16 @@ export default function SpecificVenuePage() {
                     minDate={new Date()}
                     excludeDates={excludedDates}
                     placeholderText="Select Date"
+                    aria-label="Select check in date"
                     className="w-full text-sm text-[#605F5F] outline-none bg-transparent cursor-pointer font-bold"
                   />
                 </div>
                 <div className="p-3 flex flex-col">
-                  <label className="text-xs font-bold text-[#000000] uppercase mb-1">
+                  <label htmlFor="dateTo" className="text-xs font-bold text-[#000000] uppercase mb-1">
                     Check out
                   </label>
                   <DatePicker
+                    id="dateTo"
                     selected={bookingData.dateTo}
                     onChange={(date: Date | null) => 
                       setBookingData({ ...bookingData, dateTo: date })
@@ -286,6 +290,7 @@ export default function SpecificVenuePage() {
                     minDate={bookingData.dateFrom || new Date()}
                     excludeDates={excludedDates}
                     placeholderText="Select Date"
+                    aria-label="Select check out date"
                     className="w-full text-sm text-[#605F5F] outline-none bg-transparent cursor-pointer font-bold"
                   />
                 </div>
@@ -303,6 +308,8 @@ export default function SpecificVenuePage() {
                   max={venue.maxGuests}
                   placeholder={`Max ${venue.maxGuests} guests`}
                   required
+                  aria-required="true"
+                  aria-label={`Number of guests, maximum ${venue.maxGuests}`}
                   onChange={(e) =>
                     setBookingData({
                       ...bookingData,
@@ -316,6 +323,7 @@ export default function SpecificVenuePage() {
 
             <button
               type="submit"
+              aria-label="Reserve venue"
               className="w-full bg-[#4A1D1A] text-[#C5A059] font-bold text-lg py-3 rounded-full hover:bg-[#3A1412] transition-colors relative z-0">
               Reserve
             </button>
