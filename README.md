@@ -51,28 +51,31 @@ You will need Node.js and npm installed on your machine.
 * npm
   ```
   npm install npm@latest -g
-Installation
+  ```
 
 Clone the repository
 ```
 git clone https://github.com/ReZvanYY/FED2-PE2-MeratR-NOROFF.git
+```
 
 Install NPM packages
 ```
 npm install
+```
 
 Set up Environment Variables
-To run this project locally, you must create a .env file in the root directory and add the following variables.
+- To run this project locally, you must create a .env file in the root directory and add the following variables.
 ```
 VITE_API_BASE_URL=" https://v2.api.noroff.dev/
 VITE_API_KEY=c50f36d3-35fb-42fa-88de-2674d066c1c2"
 ```
-I am providing this information only due to grading reasons. Would not share this otherwise.
+- I am providing this information only due to grading reasons. Would not share this otherwise.
 
 Start the development server
 ```
 npm run dev
-Open your browser and visit http://localhost:5173
+```
+- Open your browser and visit http://localhost:5173
 
 ### Testing & Validation
 This project has been manually tested against the PE2 user stories and validated using industry-standard tools to ensure high performance and accessibility:
@@ -81,6 +84,6 @@ This project has been manually tested against the PE2 user stories and validated
 - W3C HTML Validator: Validated to ensure clean, error-free DOM rendering.
 
 ### Author
-Merat Rezvany Hesary
-GitHub: @ReZvanYY
-Noroff Project Exam 2 - Front-End Development
+- Merat Rezvany Hesary
+- GitHub: @ReZvanYY
+- Noroff Project Exam 2 - Front-End Development
