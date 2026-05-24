@@ -75,27 +75,43 @@ export default function BecomeVenueManager() {
   };
 
   return (
-    <div className="w-full flex-grow flex items-center justify-center p-4 bg-[#222222] font-kadwa min-h-[calc(100vh-200px)]">
+    <div 
+      className="w-full flex-grow flex items-center justify-center p-4 bg-[#222222] font-kadwa min-h-[calc(100vh-200px)]"
+      aria-labelledby="manager-heading"
+    >
       <div className="w-full max-w-2xl flex flex-col">
         {/* Module Header Text */}
-        <p className="text-[#888888] text-sm mb-2 ml-2">
+        <p className="text-[#888888] text-sm mb-2 ml-2" aria-hidden="true">
           venue manager - agreement module
         </p>
 
         {/* Main Dark Modal */}
-        <div className="bg-[#2E1311] border border-[#4A1D1A] shadow-2xl rounded-sm p-10 md:p-16 flex flex-col items-center">
-          <h1 className="text-2xl md:text-3xl font-bold text-[#C5A059] mb-12 text-center">
+        <div 
+          className="bg-[#2E1311] border border-[#4A1D1A] shadow-2xl rounded-sm p-10 md:p-16 flex flex-col items-center"
+          role="region"
+          aria-labelledby="manager-heading"
+        >
+          <h1 
+            id="manager-heading"
+            className="text-2xl md:text-3xl font-bold text-[#C5A059] mb-12 text-center"
+          >
             Becoming a venue manager
           </h1>
 
           {error && (
-            <div className="mb-8 w-full max-w-md p-3 bg-red-900/50 border border-red-500/50 rounded-md text-red-200 text-sm font-bold text-center">
+            <div 
+              id="manager-error"
+              role="alert"
+              aria-live="assertive"
+              className="mb-8 w-full max-w-md p-3 bg-red-900/50 border border-red-500/50 rounded-md text-red-200 text-sm font-bold text-center"
+            >
               {error}
             </div>
           )}
 
           <form
             onSubmit={handleBecomeManager}
+            aria-labelledby="manager-heading"
             className="w-full max-w-lg flex flex-col items-center">
             {/* Custom Checkbox Layout */}
             <label className="flex items-start gap-4 mb-16 cursor-pointer group">
@@ -107,10 +123,14 @@ export default function BecomeVenueManager() {
                     setAgreed(e.target.checked);
                     if (error) setError(null); // Clear error when they check the box
                   }}
+                  aria-required="true"
+                  aria-invalid={!!error}
+                  aria-describedby={error ? "manager-error" : undefined}
                   className="peer appearance-none w-6 h-6 md:w-8 md:h-8 bg-[#FAF9F6] rounded-sm cursor-pointer checked:bg-[#FAF9F6] transition-all"
                 />
                 {/* Checkmark that appears when peer is checked */}
                 <svg
+                  aria-hidden="true"
                   className="absolute w-4 h-4 md:w-6 md:h-6 text-[#4A1D1A] pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity"
                   viewBox="0 0 24 24"
                   fill="none"
@@ -124,7 +144,7 @@ export default function BecomeVenueManager() {
 
               <span className="text-[#FAF9F6] font-bold text-lg md:text-xl leading-relaxed">
                 I have read and accept the terms & conditions{" "}
-                <br className="hidden md:block" />
+                <br className="hidden md:block" aria-hidden="true" />
                 for becoming a venue manager.
               </span>
             </label>
@@ -133,6 +153,7 @@ export default function BecomeVenueManager() {
             <button
               type="submit"
               disabled={isProcessing}
+              aria-busy={isProcessing}
               className="bg-[#3A1412] text-[#C5A059] border-2 border-[#C5A059] rounded-full px-8 md:px-12 py-3 md:py-4 text-lg md:text-xl font-bold hover:bg-[#C5A059] hover:text-[#3A1412] transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-lg">
               {isProcessing ? "Processing..." : "Become a venue manager"}
             </button>
