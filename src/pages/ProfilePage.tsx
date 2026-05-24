@@ -265,15 +265,15 @@ export default function ProfilePage() {
 
   if (isLoading) {
     return (
-      <div className="w-full flex-grow flex justify-center items-center font-kadwa">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C5A059]"></div>
+      <div className="w-full flex-grow flex justify-center items-center font-kadwa" role="status" aria-live="polite">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C5A059]" aria-label="Loading profile data"></div>
       </div>
     );
   }
 
   if (error || !profile) {
     return (
-      <div className="w-full flex-grow flex justify-center items-center font-kadwa">
+      <div className="w-full flex-grow flex justify-center items-center font-kadwa" role="alert" aria-live="assertive">
         <div className="text-center text-[#4A1D1A] font-bold text-xl">
           {error || "Profile not found."}
           <br />
@@ -314,7 +314,7 @@ export default function ProfilePage() {
             onError={(e) => (e.currentTarget.style.display = "none")}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center font-bold text-[#605F5F] text-xl tracking-widest uppercase">
+          <div className="w-full h-full flex items-center justify-center font-bold text-[#605F5F] text-xl tracking-widest uppercase" aria-hidden="true">
             Profile Banner
           </div>
         )}
@@ -324,7 +324,7 @@ export default function ProfilePage() {
       <div className="w-full max-w-7xl mx-auto px-4 md:px-8 relative -mt-16 mb-8 flex flex-col md:flex-row items-center md:items-end gap-6 text-center md:text-left">
         <img
           src={profile.avatar?.url || "/ProfilePageGenericIcon.png"}
-          alt={profile.name}
+          alt={`${profile.name}'s avatar`}
           className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-[#FAF9F6] shadow-md bg-[#FFFFFF]"
           onError={(e) => {
             (e.target as HTMLImageElement).src = "/ProfilePageGenericIcon.png";
@@ -334,37 +334,53 @@ export default function ProfilePage() {
           <h1 className="text-2xl md:text-3xl font-bold text-[#000000] uppercase tracking-wider">
             {profile.name}
           </h1>
-          <p className="text-xs font-bold text-[#4A1D1A] uppercase tracking-widest mt-1 mb-1">
+          <p className="text-xs font-bold text-[#4A1D1A] uppercase tracking-widest mt-1 mb-1" aria-hidden="true">
             Bio
           </p>
-          <p className="text-[#605F5F] text-sm max-w-lg leading-relaxed">
+          <p className="text-[#605F5F] text-sm max-w-lg leading-relaxed" aria-label="User biography">
             {profile.bio || "No bio provided yet."}
           </p>
         </div>
       </div>
 
-      {/* Main Interactive Container */}
+      {/* Main Interactive Container (Wireframe White Box) */}
       <div className="w-full max-w-7xl mx-auto px-4 md:px-8 mb-16">
         <div className="bg-[#FFFFFF] border-[3px] border-[#C5A059] rounded-4xl p-6 md:p-10 shadow-lg min-h-125">
           {/* Top Pill Navigation */}
-          <div className="flex flex-wrap justify-center gap-4 mb-10 border-b border-[#C5A059]/20 pb-8">
+          <div role="tablist" aria-label="Profile sections" className="flex flex-wrap justify-center gap-4 mb-10 border-b border-[#C5A059]/20 pb-8">
             <button
+              id="tab-upcoming"
+              role="tab"
+              aria-selected={activeTab === "upcoming"}
+              aria-controls="tabpanel-upcoming"
               onClick={() => setActiveTab("upcoming")}
               className={`px-6 py-2 rounded-full font-bold text-sm transition-all border-2 ${activeTab === "upcoming" ? "bg-[#4A1D1A] text-[#C5A059] border-[#4A1D1A] shadow-md" : "bg-transparent text-[#4A1D1A] border-[#C5A059] hover:bg-[#C5A059]/10"}`}>
               My Bookings
             </button>
             <button
+              id="tab-past"
+              role="tab"
+              aria-selected={activeTab === "past"}
+              aria-controls="tabpanel-past"
               onClick={() => setActiveTab("past")}
               className={`px-6 py-2 rounded-full font-bold text-sm transition-all border-2 ${activeTab === "past" ? "bg-[#4A1D1A] text-[#C5A059] border-[#4A1D1A] shadow-md" : "bg-transparent text-[#4A1D1A] border-[#C5A059] hover:bg-[#C5A059]/10"}`}>
               Previous Bookings
             </button>
             <button
+              id="tab-update"
+              role="tab"
+              aria-selected={activeTab === "update"}
+              aria-controls="tabpanel-update"
               onClick={() => setActiveTab("update")}
               className={`px-6 py-2 rounded-full font-bold text-sm transition-all border-2 ${activeTab === "update" ? "bg-[#4A1D1A] text-[#C5A059] border-[#4A1D1A] shadow-md" : "bg-transparent text-[#4A1D1A] border-[#C5A059] hover:bg-[#C5A059]/10"}`}>
               Update Profile
             </button>
             {profile.venueManager && (
               <button
+                id="tab-venues"
+                role="tab"
+                aria-selected={activeTab === "venues"}
+                aria-controls="tabpanel-venues"
                 onClick={() => setActiveTab("venues")}
                 className={`px-6 py-2 rounded-full font-bold text-sm transition-all border-2 ${activeTab === "venues" ? "bg-[#4A1D1A] text-[#C5A059] border-[#4A1D1A] shadow-md" : "bg-transparent text-[#4A1D1A] border-[#C5A059] hover:bg-[#C5A059]/10"}`}>
                 My Venues
@@ -374,9 +390,9 @@ export default function ProfilePage() {
 
           {/* TAB CONTENT AREA */}
           <div className="w-full">
-            {/* UPCOMING BOOKINGS */}
+            {/* 1. UPCOMING BOOKINGS */}
             {activeTab === "upcoming" && (
-              <div className="space-y-6">
+              <div id="tabpanel-upcoming" role="tabpanel" aria-labelledby="tab-upcoming" className="space-y-6">
                 {upcoming.length > 0 ? (
                   upcoming.map((b) => (
                     <div
@@ -386,7 +402,7 @@ export default function ProfilePage() {
                         <img
                           src={b.venue?.media[0]?.url || "/fallback-image.jpg"}
                           className="w-full h-full object-cover"
-                          alt={b.venue?.name}
+                          alt={`Venue: ${b.venue?.name}`}
                           onError={(e) => {
                             (e.target as HTMLImageElement).src =
                               "/fallback-image.jpg";
@@ -398,22 +414,24 @@ export default function ProfilePage() {
                           <h3 className="text-xl font-bold text-[#000000] uppercase mb-1">
                             {b.venue?.name}
                           </h3>
-                          <p className="text-[#4A1D1A] font-bold text-sm mb-4">
+                          <p className="text-[#4A1D1A] font-bold text-sm mb-4" aria-label={`Dates: ${new Date(b.dateFrom).toLocaleDateString()} to ${new Date(b.dateTo).toLocaleDateString()}`}>
                             {new Date(b.dateFrom).toLocaleDateString()} —{" "}
                             {new Date(b.dateTo).toLocaleDateString()}
                           </p>
-                          <p className="text-[#605F5F] text-sm">
+                          <p className="text-[#605F5F] text-sm" aria-label={`Number of guests: ${b.guests}`}>
                             Guests: {b.guests}
                           </p>
                         </div>
                         <div className="flex gap-4 mt-6">
                           <Link
                             to={`/venues/${b.venue?.id}`}
+                            aria-label={`View details for ${b.venue?.name}`}
                             className="bg-[#4A1D1A] text-[#C5A059] px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider hover:bg-[#3A1412] transition-colors">
                             Venue Details
                           </Link>
                           <button
                             onClick={() => openEditModal(b)}
+                            aria-label={`Edit or cancel booking for ${b.venue?.name}`}
                             className="border-2 border-[#C5A059] text-[#4A1D1A] px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider hover:bg-[#C5A059]/10 transition-colors">
                             Edit / Cancel
                           </button>
@@ -429,19 +447,20 @@ export default function ProfilePage() {
               </div>
             )}
 
-            {/* PAST BOOKINGS */}
+            {/* 2. PAST BOOKINGS */}
             {activeTab === "past" && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div id="tabpanel-past" role="tabpanel" aria-labelledby="tab-past" className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {past.length > 0 ? (
                   past.map((b) => (
                     <Link
                       to={`/venues/${b.venue?.id}`}
                       key={b.id}
+                      aria-label={`Past booking at ${b.venue?.name} on ${new Date(b.dateFrom).toLocaleDateString()}`}
                       className="border border-[#C5A059]/40 rounded-xl flex overflow-hidden hover:shadow-md transition-all bg-[#FAF9F6] h-28">
                       <img
                         src={b.venue?.media[0]?.url || "/fallback-image.jpg"}
                         className="w-1/3 h-full object-cover"
-                        alt={b.venue?.name}
+                        alt={`Venue: ${b.venue?.name}`}
                         onError={(e) => {
                           (e.target as HTMLImageElement).src =
                             "/fallback-image.jpg";
@@ -451,7 +470,7 @@ export default function ProfilePage() {
                         <h4 className="font-bold text-[#000000] uppercase text-sm truncate w-full">
                           {b.venue?.name}
                         </h4>
-                        <p className="text-xs font-bold text-[#605F5F] mt-1">
+                        <p className="text-xs font-bold text-[#605F5F] mt-1" aria-hidden="true">
                           {new Date(b.dateFrom).toLocaleDateString()}
                         </p>
                       </div>
@@ -465,16 +484,20 @@ export default function ProfilePage() {
               </div>
             )}
 
-            {/* UPDATE PROFILE FORM */}
+            {/* 3. UPDATE PROFILE FORM */}
             {activeTab === "update" && (
               <form
+                id="tabpanel-update"
+                role="tabpanel"
+                aria-labelledby="tab-update"
                 onSubmit={handleUpdateProfile}
                 className="max-w-2xl mx-auto flex flex-col gap-6">
                 <div>
-                  <label className="text-sm font-bold text-[#000000] uppercase tracking-wider mb-2 block">
+                  <label htmlFor="avatarUrl" className="text-sm font-bold text-[#000000] uppercase tracking-wider mb-2 block">
                     Avatar Image URL
                   </label>
                   <input
+                    id="avatarUrl"
                     type="url"
                     value={avatarUrl}
                     onChange={(e) => setAvatarUrl(e.target.value)}
@@ -483,10 +506,11 @@ export default function ProfilePage() {
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-bold text-[#000000] uppercase tracking-wider mb-2 block">
+                  <label htmlFor="bannerUrl" className="text-sm font-bold text-[#000000] uppercase tracking-wider mb-2 block">
                     Banner Image URL
                   </label>
                   <input
+                    id="bannerUrl"
                     type="url"
                     value={bannerUrl}
                     onChange={(e) => setBannerUrl(e.target.value)}
@@ -495,10 +519,11 @@ export default function ProfilePage() {
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-bold text-[#000000] uppercase tracking-wider mb-2 block">
+                  <label htmlFor="bio" className="text-sm font-bold text-[#000000] uppercase tracking-wider mb-2 block">
                     Biography
                   </label>
                   <textarea
+                    id="bio"
                     value={bio}
                     onChange={(e) => setBio(e.target.value)}
                     placeholder="Tell us a little about yourself..."
@@ -509,6 +534,7 @@ export default function ProfilePage() {
                   <button
                     type="submit"
                     disabled={isUpdating}
+                    aria-busy={isUpdating}
                     className="bg-[#4A1D1A] text-[#C5A059] px-12 py-3 rounded-full font-bold uppercase tracking-wider hover:bg-[#3A1412] disabled:opacity-50 transition-colors">
                     {isUpdating ? "Saving..." : "Save Profile Details"}
                   </button>
@@ -516,18 +542,19 @@ export default function ProfilePage() {
               </form>
             )}
 
-            {/* MY VENUES (Only visible to managers) */}
+            {/* 4. MY VENUES (Only visible to managers) */}
             {activeTab === "venues" && profile.venueManager && (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div id="tabpanel-venues" role="tabpanel" aria-labelledby="tab-venues" className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {profile.venues && profile.venues.length > 0 ? (
                   profile.venues.map((v) => (
                     <Link
                       to={`/venues/${v.id}`}
                       key={v.id}
+                      aria-label={`Manage venue ${v.name}`}
                       className="border-2 border-[#C5A059]/30 rounded-2xl overflow-hidden hover:shadow-lg transition-all flex flex-col h-70">
                       <img
                         src={v.media[0]?.url || "/fallback-image.jpg"}
-                        alt={v.name}
+                        alt={`Thumbnail of ${v.name}`}
                         className="w-full h-40 object-cover bg-[#E5E5E5]"
                         onError={(e) => {
                           (e.target as HTMLImageElement).src =
@@ -539,10 +566,10 @@ export default function ProfilePage() {
                           {v.name}
                         </h4>
                         <div className="flex justify-between items-center">
-                          <span className="text-sm font-bold text-[#4A1D1A]">
+                          <span className="text-sm font-bold text-[#4A1D1A]" aria-label={`Price: ${v.price} dollars per night`}>
                             ${v.price}/nt
                           </span>
-                          <span className="text-xs font-bold text-[#605F5F] bg-[#E5E5E5] px-2 py-1 rounded">
+                          <span className="text-xs font-bold text-[#605F5F] bg-[#E5E5E5] px-2 py-1 rounded" aria-hidden="true">
                             Manage
                           </span>
                         </div>
@@ -560,21 +587,22 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      {/* EDIT / CANCEL BOOKING MODAL */}
+      {/* --- EDIT / CANCEL BOOKING MODAL --- */}
       {selectedBooking && (
-        <div className="fixed inset-0 bg-[#000000]/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div role="dialog" aria-modal="true" aria-labelledby="modal-title" className="fixed inset-0 bg-[#000000]/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
           <div className="bg-[#FFFFFF] border-[3px] border-[#C5A059] rounded-3xl w-full max-w-md overflow-hidden shadow-2xl">
             <div className="bg-[#4A1D1A] p-6 flex justify-between items-center border-b border-[#C5A059]">
               <div>
-                <h3 className="text-lg font-bold text-[#C5A059] uppercase tracking-wider">
+                <h3 id="modal-title" className="text-lg font-bold text-[#C5A059] uppercase tracking-wider">
                   Manage Reservation
                 </h3>
-                <p className="text-xs font-bold text-[#FAF9F6] truncate max-w-62.5">
+                <p className="text-xs font-bold text-[#FAF9F6] truncate max-w-62.5" aria-label={`Venue: ${selectedBooking.venue?.name}`}>
                   {selectedBooking.venue?.name}
                 </p>
               </div>
               <button
                 onClick={() => setSelectedBooking(null)}
+                aria-label="Close manage reservation modal"
                 className="text-[#C5A059] text-2xl hover:text-[#FFFFFF]">
                 ✕
               </button>
@@ -583,15 +611,17 @@ export default function ProfilePage() {
             <form onSubmit={handleSaveBookingChange} className="p-8 space-y-6">
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex flex-col">
-                  <label className="text-xs font-bold text-[#000000] uppercase mb-1">
+                  <label htmlFor="editCheckIn" className="text-xs font-bold text-[#000000] uppercase mb-1">
                     Check-in{" "}
                     {isModalLocked && (
-                      <span className="text-red-600">(Locked)</span>
+                      <span className="text-red-600" aria-label="(This date is locked)">(Locked)</span>
                     )}
                   </label>
                   <input
+                    id="editCheckIn"
                     type="date"
                     disabled={isModalLocked}
+                    aria-disabled={isModalLocked}
                     required
                     value={editDateFrom}
                     onChange={(e) => setEditDateFrom(e.target.value)}
@@ -599,15 +629,17 @@ export default function ProfilePage() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label className="text-xs font-bold text-[#000000] uppercase mb-1">
+                  <label htmlFor="editCheckOut" className="text-xs font-bold text-[#000000] uppercase mb-1">
                     Check-out{" "}
                     {isModalLocked && (
-                      <span className="text-red-600">(Locked)</span>
+                      <span className="text-red-600" aria-label="(This date is locked)">(Locked)</span>
                     )}
                   </label>
                   <input
+                    id="editCheckOut"
                     type="date"
                     disabled={isModalLocked}
+                    aria-disabled={isModalLocked}
                     required
                     value={editDateTo}
                     onChange={(e) => setEditDateTo(e.target.value)}
@@ -617,10 +649,11 @@ export default function ProfilePage() {
               </div>
 
               <div className="flex flex-col">
-                <label className="text-xs font-bold text-[#000000] uppercase mb-1">
+                <label htmlFor="editGuests" className="text-xs font-bold text-[#000000] uppercase mb-1">
                   Guests
                 </label>
                 <input
+                  id="editGuests"
                   type="number"
                   min="1"
                   max={selectedBooking.venue?.maxGuests || 99}
@@ -635,12 +668,14 @@ export default function ProfilePage() {
                 <button
                   type="submit"
                   disabled={isModalProcessing}
+                  aria-busy={isModalProcessing}
                   className="w-full bg-[#C5A059] text-[#4A1D1A] font-bold py-3 rounded-full text-sm uppercase tracking-wider hover:bg-[#E5C282] transition-colors disabled:opacity-50">
                   {isModalProcessing ? "Saving..." : "Save Date Changes"}
                 </button>
                 <button
                   type="button"
                   disabled={isModalProcessing}
+                  aria-busy={isModalProcessing}
                   onClick={handleCancelBooking}
                   className="w-full border-2 border-red-800 text-red-800 font-bold py-3 rounded-full text-sm uppercase tracking-wider hover:bg-red-50 transition-colors disabled:opacity-50">
                   {isModalProcessing
