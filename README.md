@@ -2,9 +2,7 @@
 
 Ember & Stone is a premium accommodation booking platform designed for the discerning traveler. Built as the final Project Exam 2 (PE2) for Noroff, this application provides a seamless, luxury-themed interface for both customers looking to book their next adventure, and venue managers managing their high-end properties.
 
-
-
-## 📋 Table of Contents
+## Table of Contents
 
 1. [Features](#-features)
 2. [Built With](#-built-with)
@@ -14,7 +12,7 @@ Ember & Stone is a premium accommodation booking platform designed for the disce
 6. [Author](#-author)
 
 
-## ✨ Features
+## Features
 
 The application is built around the official Noroff Holidaze API and satisfies the following user stories:
 ### For All Users (Unregistered & Registered)
@@ -45,7 +43,7 @@ This project was built with a modern React tech stack, utilizing a strict design
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 To get a local copy up and running, follow these simple steps.
 
 ### Prerequisites
@@ -56,37 +54,33 @@ You will need Node.js and npm installed on your machine.
 Installation
 
 Clone the repository
-Bash
+```
 git clone https://github.com/ReZvanYY/FED2-PE2-MeratR-NOROFF.git
-Navigate into the directory
 
-Bash
-cd holidaze-ember-and-stone
 Install NPM packages
-
-Bash
+```
 npm install
-Set up Environment Variables (See section below)
+
+Set up Environment Variables
+To run this project locally, you must create a .env file in the root directory and add the following variables.
+```
+VITE_API_BASE_URL=" https://v2.api.noroff.dev/
+VITE_API_KEY=c50f36d3-35fb-42fa-88de-2674d066c1c2"
+```
+I am providing this information only due to grading reasons. Would not share this otherwise.
 
 Start the development server
-Bash
+```
 npm run dev
 Open your browser and visit http://localhost:5173
 
-🔐 Environment Variables
-To run this project locally, you must create a .env file in the root directory and add the following variables.
-VITE_API_BASE_URL=" https://v2.api.noroff.dev/
-VITE_API_KEY=c50f36d3-35fb-42fa-88de-2674d066c1c2"
-I am providing this information only due to grading reasons. Would not share this otherwise.
-
-
-🧪 Testing & Validation
+### Testing & Validation
 This project has been manually tested against the PE2 user stories and validated using industry-standard tools to ensure high performance and accessibility:
-Lighthouse: Tested for Performance, Accessibility, Best Practices, and SEO.
-WAVE (Web Accessibility Evaluation Tool): Tested to ensure proper contrast ratios, ARIA labeling, and semantic HTML structure.
-W3C HTML Validator: Validated to ensure clean, error-free DOM rendering.
+- Lighthouse: Tested for Performance, Accessibility, Best Practices, and SEO.
+- WAVE (Web Accessibility Evaluation Tool): Tested to ensure proper contrast ratios, ARIA labeling, and semantic HTML structure.
+- W3C HTML Validator: Validated to ensure clean, error-free DOM rendering.
 
-👤 Author
+### Author
 Merat Rezvany Hesary
 GitHub: @ReZvanYY
 Noroff Project Exam 2 - Front-End Development
