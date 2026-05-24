@@ -186,8 +186,8 @@ export default function DashboardPage() {
 
   if (isLoading) {
     return (
-      <div className="w-full flex-grow flex justify-center items-center font-kadwa">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C5A059]"></div>
+      <div className="w-full flex-grow flex justify-center items-center font-kadwa" role="status" aria-live="polite">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C5A059]" aria-label="Loading dashboard data"></div>
       </div>
     );
   }
@@ -199,7 +199,7 @@ export default function DashboardPage() {
       </h1>
 
       {error && (
-        <div className="max-w-7xl mx-auto bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-8 text-center font-bold">
+        <div className="max-w-7xl mx-auto bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-8 text-center font-bold" role="alert" aria-live="assertive">
           {error}
         </div>
       )}
@@ -214,8 +214,11 @@ export default function DashboardPage() {
             </h2>
             <Link
               to="/create-venue"
+              aria-label="Create a new venue"
               className="text-[#C5A059] hover:opacity-70 transition-opacity">
               <svg
+                aria-hidden="true"
+                focusable="false"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
@@ -229,7 +232,7 @@ export default function DashboardPage() {
             </Link>
           </div>
 
-          <div className="flex flex-col gap-5 max-h-150 overflow-y-auto pr-2 custom-scrollbar">
+          <div className="flex flex-col gap-5 max-h-150 overflow-y-auto pr-2 custom-scrollbar" role="list" aria-label="List of your venues">
             {venues.length > 0 ? (
               venues.map((venue) => {
                 const venueLocationText =
@@ -240,13 +243,14 @@ export default function DashboardPage() {
                 return (
                   <div
                     key={venue.id}
+                    role="listitem"
                     className="border border-[#C5A059] rounded-2xl p-4 flex flex-col md:flex-row items-center gap-6 bg-[#FFFFFF] shadow-sm relative pt-14 md:pt-4">
                     {/* Venue Image */}
                     <div className="w-full md:w-32 h-32 shrink-0 border border-[#C5A059]/40 rounded-xl overflow-hidden bg-[#FAF9F6]">
                       {venue.media && venue.media.length > 0 ? (
                         <img
                           src={venue.media[0].url}
-                          alt={venue.media[0].alt || venue.name}
+                          alt={venue.media[0].alt || `Thumbnail of ${venue.name}`}
                           className="w-full h-full object-cover"
                           onError={(e) => {
                             (e.target as HTMLImageElement).src =
@@ -254,7 +258,7 @@ export default function DashboardPage() {
                           }}
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-xs font-bold text-[#605F5F] uppercase text-center p-2">
+                        <div className="w-full h-full flex items-center justify-center text-xs font-bold text-[#605F5F] uppercase text-center p-2" aria-hidden="true">
                           Venue Image
                         </div>
                       )}
@@ -269,6 +273,8 @@ export default function DashboardPage() {
                         {/* Location Icon & Text */}
                         <div className="flex items-center gap-1.5 text-[#4A1D1A] mt-0.5">
                           <svg
+                            aria-hidden="true"
+                            focusable="false"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
                             fill="currentColor"
@@ -279,7 +285,7 @@ export default function DashboardPage() {
                               clipRule="evenodd"
                             />
                           </svg>
-                          <p className="text-xs font-bold uppercase tracking-wider truncate max-w-55">
+                          <p className="text-xs font-bold uppercase tracking-wider truncate max-w-55" aria-label={`Location: ${venueLocationText}`}>
                             {venueLocationText}
                           </p>
                         </div>
@@ -289,11 +295,13 @@ export default function DashboardPage() {
                       <div className="mt-8 md:mt-auto md:ml-auto w-full md:w-auto flex flex-col items-center md:items-end gap-2">
                         <Link
                           to={`/edit-venue/${venue.id}`}
+                          aria-label={`Edit venue: ${venue.name}`}
                           className="bg-[#4A1D1A] text-[#C5A059] border-2 border-[#4A1D1A] font-bold py-2 px-8 rounded-full shadow-md hover:bg-[#3A1412] transition-colors text-sm text-center w-full md:w-auto">
                           Edit Venue
                         </Link>
                         <button
                           onClick={() => handleDeleteVenue(venue.id)}
+                          aria-label={`Delete venue: ${venue.name}`}
                           className="text-[#000000] font-extrabold text-[10px] hover:text-red-700 transition-colors uppercase tracking-widest mt-1">
                           Delete Venue
                         </button>
@@ -316,7 +324,7 @@ export default function DashboardPage() {
             Venue Requested
           </h2>
 
-          <div className="flex flex-col gap-5 max-h-150 overflow-y-auto pr-2 custom-scrollbar">
+          <div className="flex flex-col gap-5 max-h-150 overflow-y-auto pr-2 custom-scrollbar" role="list" aria-label="List of requested bookings">
             {upcomingBookings.length > 0 ? (
               upcomingBookings.map((booking) => {
                 const nights = calculateNights(
@@ -331,13 +339,14 @@ export default function DashboardPage() {
                 return (
                   <div
                     key={booking.id}
+                    role="listitem"
                     className="border border-[#C5A059] rounded-2xl p-4 flex flex-col lg:flex-row gap-6 bg-[#FFFFFF] shadow-sm relative pt-14 lg:pt-4">
                     {/* Booking Venue Image */}
                     <div className="w-full lg:w-32 h-32 shrink-0 border border-[#C5A059]/40 rounded-xl overflow-hidden bg-[#FAF9F6]">
                       {booking.venueMedia && booking.venueMedia.length > 0 ? (
                         <img
                           src={booking.venueMedia[0].url}
-                          alt={booking.venueName}
+                          alt={`Thumbnail of ${booking.venueName}`}
                           className="w-full h-full object-cover"
                           onError={(e) => {
                             (e.target as HTMLImageElement).src =
@@ -345,7 +354,7 @@ export default function DashboardPage() {
                           }}
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-xs font-bold text-[#605F5F] uppercase text-center p-2">
+                        <div className="w-full h-full flex items-center justify-center text-xs font-bold text-[#605F5F] uppercase text-center p-2" aria-hidden="true">
                           Venue Image
                         </div>
                       )}
@@ -360,6 +369,8 @@ export default function DashboardPage() {
                         {/* Location Icon & Text */}
                         <div className="flex items-center gap-1.5 text-[#4A1D1A] mt-0.5">
                           <svg
+                            aria-hidden="true"
+                            focusable="false"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
                             fill="currentColor"
@@ -370,7 +381,7 @@ export default function DashboardPage() {
                               clipRule="evenodd"
                             />
                           </svg>
-                          <p className="text-xs font-bold uppercase tracking-wider truncate max-w-55">
+                          <p className="text-xs font-bold uppercase tracking-wider truncate max-w-55" aria-label={`Location: ${bookingLocationText}`}>
                             {bookingLocationText}
                           </p>
                         </div>
@@ -378,22 +389,24 @@ export default function DashboardPage() {
 
                       <div className="flex flex-col lg:flex-row justify-between w-full mt-8 lg:mt-0 items-center lg:items-start">
                         <div className="text-sm font-bold text-[#000000] space-y-1 mb-4 lg:mb-0 text-center lg:text-left">
-                          <p>
+                          <p aria-label={`Staying for ${nights} ${nights !== 1 ? "nights" : "night"}`}>
                             Staying for: {nights} night{nights !== 1 ? "s" : ""}
                           </p>
-                          <p>Guests: {booking.guests}</p>
-                          <p>Price: {booking.venuePrice} per night</p>
+                          <p aria-label={`Number of guests: ${booking.guests}`}>Guests: {booking.guests}</p>
+                          <p aria-label={`Price per night: $${booking.venuePrice}`}>Price: ${booking.venuePrice} per night</p>
                         </div>
 
                         {/* Action Buttons */}
                         <div className="flex flex-col items-center gap-2">
                           <Link
                             to={`/venues/${booking.venue?.id || ""}`}
+                            aria-label={`Review booking for ${booking.venueName}`}
                             className="bg-[#4A1D1A] text-[#C5A059] border-2 border-[#4A1D1A] font-bold py-2 px-6 rounded-full shadow-md hover:bg-[#3A1412] transition-colors text-sm w-44 text-center">
                             Review Booking
                           </Link>
                           <button
                             onClick={() => handleDeclineBooking(booking.id)}
+                            aria-label={`Decline booking for ${booking.venueName}`}
                             className="text-[#000000] font-extrabold text-[10px] hover:text-red-700 transition-colors uppercase tracking-widest mt-1">
                             Decline booking
                           </button>
