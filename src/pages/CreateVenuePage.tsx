@@ -127,21 +127,28 @@ export default function CreateVenuePage() {
   if (!venueManager) return <Navigate to="/profile" />;
 
   return (
-    <div className="w-full flex-grow bg-[#FAF9F6] font-kadwa p-4 md:p-10 flex flex-col items-center">
+    <div 
+      className="w-full flex-grow bg-[#FAF9F6] font-kadwa p-4 md:p-10 flex flex-col items-center"
+      aria-labelledby="page-heading"
+    >
       
-      <h1 className="text-3xl md:text-5xl font-extrabold text-center text-[#000000] mb-8 tracking-wide">
+      <h1 id="page-heading" className="text-3xl md:text-5xl font-extrabold text-center text-[#000000] mb-8 tracking-wide">
         Create a new listing
       </h1>
 
       <div className="w-full max-w-4xl bg-[#FFFFFF] border-[3px] border-[#C5A059] rounded-4xl md:rounded-[3rem] p-6 md:p-12 shadow-sm">
         
         {error && (
-          <div className="bg-red-100 p-4 rounded-xl text-red-700 text-center font-bold mb-8 border border-red-300">
+          <div 
+            role="alert" 
+            aria-live="assertive"
+            className="bg-red-100 p-4 rounded-xl text-red-700 text-center font-bold mb-8 border border-red-300"
+          >
             {error}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="flex flex-col items-center gap-10">
+        <form onSubmit={handleSubmit} aria-label="Create new venue form" className="flex flex-col items-center gap-10">
           
           {/* TITLE */}
           <div className="w-full flex justify-center">
@@ -150,6 +157,7 @@ export default function CreateVenuePage() {
               name="name" 
               required 
               placeholder="VENUE TITLE"
+              aria-label="Venue Title"
               value={formData.name} 
               onChange={handleChange}
               className="w-full md:w-1/2 border border-[#C5A059] rounded-full px-6 py-3 text-center text-sm font-bold text-[#000000] placeholder-[#605F5F] outline-none shadow-sm focus:border-[#4A1D1A] transition-colors"
@@ -157,13 +165,14 @@ export default function CreateVenuePage() {
           </div>
 
           {/* Dynamic Media URLs */}
-          <div className="w-full flex flex-col items-center gap-4">
+          <div className="w-full flex flex-col items-center gap-4" role="group" aria-label="Venue Images">
             {mediaUrls.map((url, index) => (
               <input 
                 key={index}
                 type="url" 
                 required={index === 0} // Only the first image is strictly required
                 placeholder="IMAGE URL"
+                aria-label={`Image URL ${index + 1}`}
                 value={url} 
                 onChange={(e) => handleMediaChange(index, e.target.value)}
                 className="w-full md:w-2/3 border border-[#C5A059] rounded-full px-6 py-3 text-center text-sm font-bold text-[#000000] placeholder-[#605F5F] outline-none shadow-sm focus:border-[#4A1D1A] transition-colors"
@@ -175,6 +184,7 @@ export default function CreateVenuePage() {
               <button 
                 type="button" 
                 onClick={addMediaInput}
+                aria-label="Add another image URL"
                 className="bg-[#4A1D1A] text-[#C5A059] font-bold text-xs px-6 py-1.5 rounded-full shadow-md hover:bg-[#3A1412] transition-colors mt-2"
               >
                 +1
@@ -184,25 +194,33 @@ export default function CreateVenuePage() {
 
           {/* Venue Address */}
           <div className="w-full flex flex-col items-center">
-            <h3 className="font-extrabold text-[#000000] tracking-wider mb-2 uppercase">Venue Address</h3>
-            <div className="w-full md:w-3/4 border border-[#C5A059] rounded-full flex overflow-hidden shadow-sm divide-x divide-[#C5A059]">
+            <h3 id="address-heading" className="font-extrabold text-[#000000] tracking-wider mb-2 uppercase">Venue Address</h3>
+            <div 
+              role="group" 
+              aria-labelledby="address-heading"
+              className="w-full md:w-3/4 border border-[#C5A059] rounded-full flex overflow-hidden shadow-sm divide-x divide-[#C5A059]"
+            >
               <input 
                 type="text" name="address" required placeholder="ADDRESS"
+                aria-label="Street Address"
                 value={formData.location.address} onChange={handleLocationChange}
                 className="w-full px-2 py-3 text-center text-xs md:text-sm font-bold text-[#000000] placeholder-[#605F5F] outline-none bg-transparent"
               />
               <input 
                 type="text" name="city" required placeholder="CITY"
+                aria-label="City"
                 value={formData.location.city} onChange={handleLocationChange}
                 className="w-full px-2 py-3 text-center text-xs md:text-sm font-bold text-[#000000] placeholder-[#605F5F] outline-none bg-transparent"
               />
               <input 
                 type="text" name="zip" required placeholder="POSTAL CODE"
+                aria-label="Postal Code"
                 value={formData.location.zip} onChange={handleLocationChange}
                 className="w-full px-2 py-3 text-center text-xs md:text-sm font-bold text-[#000000] placeholder-[#605F5F] outline-none bg-transparent"
               />
               <input 
                 type="text" name="country" required placeholder="COUNTRY"
+                aria-label="Country"
                 value={formData.location.country} onChange={handleLocationChange}
                 className="w-full px-2 py-3 text-center text-xs md:text-sm font-bold text-[#000000] placeholder-[#605F5F] outline-none bg-transparent"
               />
@@ -214,8 +232,8 @@ export default function CreateVenuePage() {
             
             {/* Amenities Column */}
             <div className="flex flex-col items-center md:items-start pl-0 md:pl-10">
-              <h3 className="font-extrabold text-[#000000] tracking-wider mb-3 uppercase">Venue Amenities</h3>
-              <div className="flex flex-col gap-2">
+              <h3 id="amenities-heading" className="font-extrabold text-[#000000] tracking-wider mb-3 uppercase">Venue Amenities</h3>
+              <div role="group" aria-labelledby="amenities-heading" className="flex flex-col gap-2">
                 {Object.keys(formData.meta).map((key) => (
                   <label key={key} className="flex items-center gap-3 cursor-pointer group">
                     <div className="relative flex items-center justify-center shrink-0">
@@ -243,18 +261,20 @@ export default function CreateVenuePage() {
             <div className="flex flex-col items-center gap-8">
               
               <div className="flex flex-col items-center w-full">
-                <h3 className="font-extrabold text-[#000000] tracking-wider mb-2 uppercase">Venue Price Per Night</h3>
+                <h3 id="price-heading" className="font-extrabold text-[#000000] tracking-wider mb-2 uppercase">Venue Price Per Night</h3>
                 <input 
                   type="number" min="1" name="price" required placeholder="ENTER DAILY PRICE"
+                  aria-labelledby="price-heading"
                   value={formData.price} onChange={handleChange}
                   className="w-full md:w-3/4 border border-[#C5A059] rounded-full px-6 py-2.5 text-center text-sm font-bold text-[#000000] placeholder-[#605F5F] outline-none shadow-sm"
                 />
               </div>
 
               <div className="flex flex-col items-center w-full">
-                <h3 className="font-extrabold text-[#000000] tracking-wider mb-2 uppercase">Venue Capacity</h3>
+                <h3 id="capacity-heading" className="font-extrabold text-[#000000] tracking-wider mb-2 uppercase">Venue Capacity</h3>
                 <input 
                   type="number" min="1" name="maxGuests" required placeholder="ENTER CAPACITY HERE"
+                  aria-labelledby="capacity-heading"
                   value={formData.maxGuests} onChange={handleChange}
                   className="w-full md:w-3/4 border border-[#C5A059] rounded-full px-6 py-2.5 text-center text-sm font-bold text-[#000000] placeholder-[#605F5F] outline-none shadow-sm"
                 />
@@ -269,6 +289,7 @@ export default function CreateVenuePage() {
               name="description" 
               required 
               placeholder="VENUE DESCRIPTION"
+              aria-label="Venue Description"
               value={formData.description} 
               onChange={handleChange}
               className="w-full border border-[#C5A059] rounded-2xl p-6 text-center text-sm font-bold text-[#000000] placeholder-[#605F5F] outline-none shadow-sm h-32 resize-none focus:border-[#4A1D1A] transition-colors"
@@ -279,6 +300,7 @@ export default function CreateVenuePage() {
           <button 
             type="submit" 
             disabled={isSubmitting}
+            aria-busy={isSubmitting}
             className="bg-[#4A1D1A] text-[#C5A059] font-bold text-lg md:text-xl px-12 md:px-20 py-4 rounded-full shadow-lg hover:bg-[#3A1412] transition-colors disabled:opacity-50 disabled:cursor-not-allowed border-2 border-[#C5A059] uppercase tracking-widest mt-4"
           >
             {isSubmitting ? "Processing..." : "List My Venue"}
