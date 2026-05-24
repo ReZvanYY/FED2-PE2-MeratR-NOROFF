@@ -48,7 +48,7 @@ To get a local copy up and running, follow these simple steps.
 
 ### Prerequisites
 You will need Node.js and npm installed on your machine.
-* npm
+- npm
   ```
   npm install npm@latest -g
   ```
